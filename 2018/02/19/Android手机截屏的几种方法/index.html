@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="博客名">
 <meta property="og:description" content="截图方法 使用adb命令 使用ImageReader 使用各种Android自动化测试框架，如Robotium和appium等等  使用adb命令可以通过在终端使用如下adb命令，将屏幕截图保存至手机这种方法简单，缺点就是速度较慢并且只能获得原图1adb shell /system/bin/screencap -p /sdcard/screenshot.png 然后通过adb pull 将照片拉至">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-19T08:23:53.694Z">
+<meta property="og:updated_time" content="2018-02-19T09:50:29.382Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android手机截屏的几种方法">
 <meta name="twitter:description" content="截图方法 使用adb命令 使用ImageReader 使用各种Android自动化测试框架，如Robotium和appium等等  使用adb命令可以通过在终端使用如下adb命令，将屏幕截图保存至手机这种方法简单，缺点就是速度较慢并且只能获得原图1adb shell /system/bin/screencap -p /sdcard/screenshot.png 然后通过adb pull 将照片拉至">
@@ -360,6 +360,7 @@
 <h3 id="使用adb命令"><a href="#使用adb命令" class="headerlink" title="使用adb命令"></a><strong>使用adb命令</strong></h3><p>可以通过在终端使用如下adb命令，将屏幕截图保存至手机<br>这种方法简单，缺点就是速度较慢并且只能获得原图<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell /system/bin/screencap -p /sdcard/screenshot.png</span><br></pre></td></tr></table></figure></p>
 <p>然后通过adb pull 将照片拉至本地电脑<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb pull /sdcard/screenshot.png d:/screenshot.png</span><br></pre></td></tr></table></figure></p>
 <h3 id="使用ImageReader"><a href="#使用ImageReader" class="headerlink" title="使用ImageReader"></a><strong>使用ImageReader</strong></h3><p>通过Google官方提供的接口，可以在程序里面使用ImageReader获取当前屏幕截图<br>这种方法稍微复杂，但是可以在拿到Image之后自己进行压缩和操作，而且获取和刷新图像的速度比较快<br>为了安全起见，该接口首次开始截图会出现让用户确认截图的弹窗  </p>
+<h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a><strong>原理</strong></h4><p>通过<strong><em>MediaProjection</em></strong>创建的<strong><em>VirtualDisplay</em></strong>会把不断当前设备的屏幕画面渲染到用户提供的<strong><em>surface</em></strong>上去，所以只要使用<strong><em>ImageReader</em></strong>的 <strong><em>getSurface()</em></strong> 方法就能获取当前的屏幕</p>
 <p>获取截图方法主要如下</p>
 <ul>
 <li><p>直接拿一张最新的图像</p>
@@ -489,7 +490,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -544,7 +545,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#截图方法"><span class="nav-number">1.</span> <span class="nav-text">截图方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用adb命令"><span class="nav-number">2.</span> <span class="nav-text">使用adb命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用ImageReader"><span class="nav-number">3.</span> <span class="nav-text">使用ImageReader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用自动化测试框架"><span class="nav-number">4.</span> <span class="nav-text">使用自动化测试框架</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#截图方法"><span class="nav-number">1.</span> <span class="nav-text">截图方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用adb命令"><span class="nav-number">2.</span> <span class="nav-text">使用adb命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用ImageReader"><span class="nav-number">3.</span> <span class="nav-text">使用ImageReader</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原理"><span class="nav-number">3.1.</span> <span class="nav-text">原理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用自动化测试框架"><span class="nav-number">4.</span> <span class="nav-text">使用自动化测试框架</span></a></li></ol></div>
             
 
           </div>
