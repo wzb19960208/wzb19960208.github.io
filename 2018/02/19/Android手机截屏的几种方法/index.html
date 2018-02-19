@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 
+<!-- 
 
 
   
@@ -87,7 +88,7 @@
 <meta property="og:site_name" content="博客名">
 <meta property="og:description" content="截图方法 使用adb命令 使用ImageReader 使用各种Android自动化测试框架，如Robotium和appium等等  使用adb命令可以通过在终端使用如下adb命令，将屏幕截图保存至手机这种方法简单，缺点就是速度较慢并且只能获得原图1adb shell /system/bin/screencap -p /sdcard/screenshot.png 然后通过adb pull 将照片拉至">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-19T09:50:29.382Z">
+<meta property="og:updated_time" content="2018-02-19T10:45:04.781Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android手机截屏的几种方法">
 <meta name="twitter:description" content="截图方法 使用adb命令 使用ImageReader 使用各种Android自动化测试框架，如Robotium和appium等等  使用adb命令可以通过在终端使用如下adb命令，将屏幕截图保存至手机这种方法简单，缺点就是速度较慢并且只能获得原图1adb shell /system/bin/screencap -p /sdcard/screenshot.png 然后通过adb pull 将照片拉至">
@@ -191,12 +192,12 @@
         </li>
       
         
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
-            关于
+            分类
           </a>
         </li>
       
@@ -211,22 +212,22 @@
         </li>
       
         
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
           </a>
         </li>
       
@@ -364,10 +365,10 @@
 <p>获取截图方法主要如下</p>
 <ul>
 <li><p>直接拿一张最新的图像</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">image = mImageReader.acquireLatestImage();</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">image = mImageReader.acquireLatestImage();</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>或者设置回调函数，每当有新的图像数据就进行操作</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mImageReader.setOnImageAvailableListener(new ImageReader.OnImageAvailableListener() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void onImageAvailable(ImageReader reader) &#123;</span><br><span class="line">      image = reader.acquireLatestImage();</span><br><span class="line">      ..todo</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mImageReader.setOnImageAvailableListener(<span class="keyword">new</span> ImageReader.OnImageAvailableListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onImageAvailable</span><span class="params">(ImageReader reader)</span> </span>&#123;</span><br><span class="line">      image = reader.acquireLatestImage();</span><br><span class="line">      ..todo</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="使用自动化测试框架"><a href="#使用自动化测试框架" class="headerlink" title="使用自动化测试框架"></a><strong>使用自动化测试框架</strong></h3><p>流行的框架有Robotium、UIAutomator以及Appium等等<br>这些框架能够在脚本里面调用截图功能，感兴趣可以了解一下。</p>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 
+<!-- 
 
 
   
@@ -187,12 +188,12 @@
         </li>
       
         
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
-            关于
+            分类
           </a>
         </li>
       
@@ -207,22 +208,22 @@
         </li>
       
         
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
           </a>
         </li>
       
@@ -365,18 +366,19 @@
 <h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a><strong>原理</strong></h4><p>通过<strong><em>MediaProjection</em></strong>创建的<strong><em>VirtualDisplay</em></strong>会把不断当前设备的屏幕画面渲染到用户提供的<strong><em>surface</em></strong>上去，所以只要使用<strong><em>MediaRecoder</em></strong>的<strong><em>getSurface()</em></strong> 方法就能获取当前的屏幕  </p>
 <h4 id="流程"><a href="#流程" class="headerlink" title="流程"></a><strong>流程</strong></h4><ul>
 <li><p>基本设置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mMediaRecorder = new MediaRecorder();</span><br><span class="line">//设置音频源</span><br><span class="line">mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);</span><br><span class="line">//设置视频源：Surface和Camera 两种</span><br><span class="line">mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);</span><br><span class="line">//设置视频输出格式</span><br><span class="line">mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);</span><br><span class="line">//设置视频编码格式</span><br><span class="line">mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);</span><br><span class="line">//设置音频编码格式</span><br><span class="line">mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);</span><br><span class="line">//设置视频编码的码率</span><br><span class="line">mMediaRecorder.setVideoEncodingBitRate(512 * 1000);</span><br><span class="line">//设置视频编码的帧率</span><br><span class="line">mMediaRecorder.setVideoFrameRate(30);</span><br><span class="line">//设置视频尺寸大小</span><br><span class="line">mMediaRecorder.setVideoSize(DISPLAY_WIDTH, DISPLAY_HEIGHT);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mMediaRecorder = <span class="keyword">new</span> MediaRecorder();</span><br><span class="line"><span class="comment">//设置音频源</span></span><br><span class="line">mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);</span><br><span class="line"><span class="comment">//设置视频源：Surface和Camera 两种</span></span><br><span class="line">mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);</span><br><span class="line"><span class="comment">//设置视频输出格式</span></span><br><span class="line">mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);</span><br><span class="line"><span class="comment">//设置视频编码格式</span></span><br><span class="line">mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);</span><br><span class="line"><span class="comment">//设置音频编码格式</span></span><br><span class="line">mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);</span><br><span class="line"><span class="comment">//设置视频编码的码率</span></span><br><span class="line">mMediaRecorder.setVideoEncodingBitRate(<span class="number">512</span> * <span class="number">1000</span>);</span><br><span class="line"><span class="comment">//设置视频编码的帧率</span></span><br><span class="line">mMediaRecorder.setVideoFrameRate(<span class="number">30</span>);</span><br><span class="line"><span class="comment">//设置视频尺寸大小</span></span><br><span class="line">mMediaRecorder.setVideoSize(DISPLAY_WIDTH, DISPLAY_HEIGHT);</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>设置视频输出路径<br>这里有两种方式，一是直接输出到文件中去，第二种是使用localsocket<br>因为只是录制屏幕，直接输出到文件中比较方便，并且localsocket没有什么特别之处所以就不展开了  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mMediaRecorder.setOutputFile(Environment</span><br><span class="line">            .getExternalStoragePublicDirectory(Environment</span><br><span class="line">                    .DIRECTORY_DOWNLOADS) + &quot;/video.mp4&quot;);</span><br><span class="line"></span><br><span class="line">mMediaRecorder.prepare();</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mMediaRecorder.setOutputFile(Environment</span><br><span class="line">            .getExternalStoragePublicDirectory(Environment</span><br><span class="line">                    .DIRECTORY_DOWNLOADS) + <span class="string">"/video.mp4"</span>);</span><br><span class="line"></span><br><span class="line">mMediaRecorder.prepare();</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在回调函数进行相关初始化操作，传入MediaRecoder的surface</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = new Intent(mediaProjectionManager.createScreenCaptureIntent());</span><br><span class="line">startActivityForResult(intent,REQUEST_CODE);</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">protected void onActivityResult(int requestCode, int resultCode, Intent data) &#123;</span><br><span class="line">      super.onActivityResult(requestCode, resultCode, data);</span><br><span class="line"></span><br><span class="line">      switch(requestCode)&#123;</span><br><span class="line">          case REQUEST_CODE:&#123;</span><br><span class="line"></span><br><span class="line">              mMediaProjection = mediaProjectionManager.getMediaProjection(resultCode,data);</span><br><span class="line">              mVirtualDisplay = mMediaProjection.createVirtualDisplay(&quot;MainActivity&quot;,DISPLAY_WIDTH,DISPLAY_HEIGHT,</span><br><span class="line">                      mScreenDensity, DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,mMediaRecorder.getSurface(),null,null);</span><br><span class="line"></span><br><span class="line">          &#125;break;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(mediaProjectionManager.createScreenCaptureIntent());</span><br><span class="line">startActivityForResult(intent,REQUEST_CODE);</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onActivityResult</span><span class="params">(<span class="keyword">int</span> requestCode, <span class="keyword">int</span> resultCode, Intent data)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">super</span>.onActivityResult(requestCode, resultCode, data);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">switch</span>(requestCode)&#123;</span><br><span class="line">          <span class="keyword">case</span> REQUEST_CODE:&#123;</span><br><span class="line"></span><br><span class="line">              mMediaProjection = mediaProjectionManager.getMediaProjection(resultCode,data);</span><br><span class="line">              mVirtualDisplay = mMediaProjection.createVirtualDisplay(<span class="string">"MainActivity"</span>,DISPLAY_WIDTH,DISPLAY_HEIGHT,</span><br><span class="line">                      mScreenDensity, DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,mMediaRecorder.getSurface(),<span class="keyword">null</span>,<span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">          &#125;<span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>开始/结束录制  </p>
-<pre><code>mMediaRecorder.start();
+<pre><code class="java">mMediaRecorder.start();
 mMediaRecorder.stop();
-</code></pre></li>
+</code></pre>
+</li>
 </ul>
 <h3 id="使用第三方录制工具"><a href="#使用第三方录制工具" class="headerlink" title="使用第三方录制工具"></a><strong>使用第三方录制工具</strong></h3><p>市面上有很多，有兴趣可以了解一下</p>
 
@@ -520,10 +522,10 @@ mMediaRecorder.stop();
       
         
           
-            <h3 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a><strong>基础配置</strong></h3><p><a href="http://blog.csdn.net/lemonxq/article/details/72676005" target="_blank" rel="noopener">Hexo静态博客</a><br><a href="https://www.cnblogs.com/visugar/p/6821777.html" target="_blank" rel="noopener">Hexo从零开始搭建</a>  </p>
+            <h3 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a><strong>基础配置</strong></h3><p><a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">官方教程</a><br><a href="http://blog.csdn.net/lemonxq/article/details/72676005" target="_blank" rel="noopener">Hexo静态博客</a><br><a href="https://www.cnblogs.com/visugar/p/6821777.html" target="_blank" rel="noopener">Hexo从零开始搭建</a>  </p>
 <h3 id="添加菜单项"><a href="#添加菜单项" class="headerlink" title="添加菜单项"></a><strong>添加菜单项</strong></h3><ol>
 <li><p>在menu下面取消注释</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">  home: / || home</span><br><span class="line">  about: /about/ || user</span><br><span class="line">  tags: /tags/ || tags</span><br><span class="line">  categories: /categories/ || th</span><br><span class="line">  archives: /archives/ || archive</span><br><span class="line">  #schedule: /schedule/ || calendar</span><br><span class="line">  #sitemap: /sitemap.xml || sitemap</span><br><span class="line">  #commonweal: /404/ || heartbeat</span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line"><span class="attr">  home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">home</span></span><br><span class="line"><span class="attr">  about:</span> <span class="string">/about/</span> <span class="string">||</span> <span class="string">user</span></span><br><span class="line"><span class="attr">  tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">  categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">th</span></span><br><span class="line"><span class="attr">  archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || heartbeat</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>新建一个相关的页面<br><code>hexo new page “tags”</code></p>
 </li>
@@ -535,7 +537,7 @@ mMediaRecorder.stop();
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new &quot;Hexo教程&quot;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>编辑文章的属性</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">title: hexo的几个基本操作</span><br><span class="line">date: 2018-02-19 16:36:58</span><br><span class="line">tags: hexo</span><br><span class="line">categories: hexo</span><br></pre></td></tr></table></figure>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">title: hexo的几个基本操作</span><br><span class="line">date: 2018-02-19 16:36:58</span><br><span class="line">tags: hexo</span><br><span class="line">categories: hexo</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h3 id="调试与发布"><a href="#调试与发布" class="headerlink" title="调试与发布"></a><strong>调试与发布</strong></h3><ul>
@@ -546,6 +548,7 @@ mMediaRecorder.stop();
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<h3 id="语法高亮"><a href="#语法高亮" class="headerlink" title="语法高亮"></a><strong>语法高亮</strong></h3><p>在包围代码的 三个点 后+语言 如···java</p>
 <h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a><strong>注意</strong></h3><ul>
 <li><p>站点配置文件与主题配置文件同名<strong><em>_config.yml</em></strong><br>这俩的<strong><em>timezone</em></strong>一定要一样，比如<strong><em>Asia/Shanghai</em></strong><br>不然会有奇怪的错误，非常难排查</p>
 </li>
@@ -707,10 +710,10 @@ mMediaRecorder.stop();
 <p>获取截图方法主要如下</p>
 <ul>
 <li><p>直接拿一张最新的图像</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">image = mImageReader.acquireLatestImage();</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">image = mImageReader.acquireLatestImage();</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>或者设置回调函数，每当有新的图像数据就进行操作</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mImageReader.setOnImageAvailableListener(new ImageReader.OnImageAvailableListener() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void onImageAvailable(ImageReader reader) &#123;</span><br><span class="line">      image = reader.acquireLatestImage();</span><br><span class="line">      ..todo</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mImageReader.setOnImageAvailableListener(<span class="keyword">new</span> ImageReader.OnImageAvailableListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onImageAvailable</span><span class="params">(ImageReader reader)</span> </span>&#123;</span><br><span class="line">      image = reader.acquireLatestImage();</span><br><span class="line">      ..todo</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="使用自动化测试框架"><a href="#使用自动化测试框架" class="headerlink" title="使用自动化测试框架"></a><strong>使用自动化测试框架</strong></h3><p>流行的框架有Robotium、UIAutomator以及Appium等等<br>这些框架能够在脚本里面调用截图功能，感兴趣可以了解一下。</p>

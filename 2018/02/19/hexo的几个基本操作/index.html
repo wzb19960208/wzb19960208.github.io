@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 
+<!-- 
 
 
   
@@ -79,18 +80,18 @@
 
 
 
-<meta name="description" content="基础配置Hexo静态博客Hexo从零开始搭建   添加菜单项 在menu下面取消注释 123456789menu:  home: / || home  about: /about/ || user  tags: /tags/ || tags  categories: /categories/ || th  archives: /archives/ || archive  #schedule: /s">
+<meta name="description" content="基础配置官方教程Hexo静态博客Hexo从零开始搭建   添加菜单项 在menu下面取消注释 123456789menu:  home: / || home  about: /about/ || user  tags: /tags/ || tags  categories: /categories/ || th  archives: /archives/ || archive  #schedule">
 <meta name="keywords" content="hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hexo的几个基本操作">
 <meta property="og:url" content="http://yoursite.com/2018/02/19/hexo的几个基本操作/index.html">
 <meta property="og:site_name" content="博客名">
-<meta property="og:description" content="基础配置Hexo静态博客Hexo从零开始搭建   添加菜单项 在menu下面取消注释 123456789menu:  home: / || home  about: /about/ || user  tags: /tags/ || tags  categories: /categories/ || th  archives: /archives/ || archive  #schedule: /s">
+<meta property="og:description" content="基础配置官方教程Hexo静态博客Hexo从零开始搭建   添加菜单项 在menu下面取消注释 123456789menu:  home: / || home  about: /about/ || user  tags: /tags/ || tags  categories: /categories/ || th  archives: /archives/ || archive  #schedule">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-19T09:10:50.916Z">
+<meta property="og:updated_time" content="2018-02-19T10:48:14.096Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo的几个基本操作">
-<meta name="twitter:description" content="基础配置Hexo静态博客Hexo从零开始搭建   添加菜单项 在menu下面取消注释 123456789menu:  home: / || home  about: /about/ || user  tags: /tags/ || tags  categories: /categories/ || th  archives: /archives/ || archive  #schedule: /s">
+<meta name="twitter:description" content="基础配置官方教程Hexo静态博客Hexo从零开始搭建   添加菜单项 在menu下面取消注释 123456789menu:  home: / || home  about: /about/ || user  tags: /tags/ || tags  categories: /categories/ || th  archives: /archives/ || archive  #schedule">
 
 
 
@@ -191,12 +192,12 @@
         </li>
       
         
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
-            关于
+            分类
           </a>
         </li>
       
@@ -211,22 +212,22 @@
         </li>
       
         
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
           </a>
         </li>
       
@@ -352,10 +353,10 @@
       
 
       
-        <h3 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a><strong>基础配置</strong></h3><p><a href="http://blog.csdn.net/lemonxq/article/details/72676005" target="_blank" rel="noopener">Hexo静态博客</a><br><a href="https://www.cnblogs.com/visugar/p/6821777.html" target="_blank" rel="noopener">Hexo从零开始搭建</a>  </p>
+        <h3 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a><strong>基础配置</strong></h3><p><a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">官方教程</a><br><a href="http://blog.csdn.net/lemonxq/article/details/72676005" target="_blank" rel="noopener">Hexo静态博客</a><br><a href="https://www.cnblogs.com/visugar/p/6821777.html" target="_blank" rel="noopener">Hexo从零开始搭建</a>  </p>
 <h3 id="添加菜单项"><a href="#添加菜单项" class="headerlink" title="添加菜单项"></a><strong>添加菜单项</strong></h3><ol>
 <li><p>在menu下面取消注释</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">  home: / || home</span><br><span class="line">  about: /about/ || user</span><br><span class="line">  tags: /tags/ || tags</span><br><span class="line">  categories: /categories/ || th</span><br><span class="line">  archives: /archives/ || archive</span><br><span class="line">  #schedule: /schedule/ || calendar</span><br><span class="line">  #sitemap: /sitemap.xml || sitemap</span><br><span class="line">  #commonweal: /404/ || heartbeat</span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line"><span class="attr">  home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">home</span></span><br><span class="line"><span class="attr">  about:</span> <span class="string">/about/</span> <span class="string">||</span> <span class="string">user</span></span><br><span class="line"><span class="attr">  tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">  categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">th</span></span><br><span class="line"><span class="attr">  archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || heartbeat</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>新建一个相关的页面<br><code>hexo new page “tags”</code></p>
 </li>
@@ -367,7 +368,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new &quot;Hexo教程&quot;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>编辑文章的属性</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">title: hexo的几个基本操作</span><br><span class="line">date: 2018-02-19 16:36:58</span><br><span class="line">tags: hexo</span><br><span class="line">categories: hexo</span><br></pre></td></tr></table></figure>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">title: hexo的几个基本操作</span><br><span class="line">date: 2018-02-19 16:36:58</span><br><span class="line">tags: hexo</span><br><span class="line">categories: hexo</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h3 id="调试与发布"><a href="#调试与发布" class="headerlink" title="调试与发布"></a><strong>调试与发布</strong></h3><ul>
@@ -378,6 +379,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<h3 id="语法高亮"><a href="#语法高亮" class="headerlink" title="语法高亮"></a><strong>语法高亮</strong></h3><p>在包围代码的 三个点 后+语言 如···java</p>
 <h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a><strong>注意</strong></h3><ul>
 <li><p>站点配置文件与主题配置文件同名<strong><em>_config.yml</em></strong><br>这俩的<strong><em>timezone</em></strong>一定要一样，比如<strong><em>Asia/Shanghai</em></strong><br>不然会有奇怪的错误，非常难排查</p>
 </li>
@@ -560,7 +562,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础配置"><span class="nav-number">1.</span> <span class="nav-text">基础配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加菜单项"><span class="nav-number">2.</span> <span class="nav-text">添加菜单项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新建文章"><span class="nav-number">3.</span> <span class="nav-text">新建文章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调试与发布"><span class="nav-number">4.</span> <span class="nav-text">调试与发布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意"><span class="nav-number">5.</span> <span class="nav-text">注意</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础配置"><span class="nav-number">1.</span> <span class="nav-text">基础配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加菜单项"><span class="nav-number">2.</span> <span class="nav-text">添加菜单项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新建文章"><span class="nav-number">3.</span> <span class="nav-text">新建文章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调试与发布"><span class="nav-number">4.</span> <span class="nav-text">调试与发布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语法高亮"><span class="nav-number">5.</span> <span class="nav-text">语法高亮</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意"><span class="nav-number">6.</span> <span class="nav-text">注意</span></a></li></ol></div>
             
 
           </div>
