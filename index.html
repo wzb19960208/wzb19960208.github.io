@@ -352,24 +352,38 @@
       
         
           
-            <h3 id="添加菜单项"><a href="#添加菜单项" class="headerlink" title="添加菜单项"></a><strong>添加菜单项</strong></h3><ol>
+            <h3 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a><strong>基础配置</strong></h3><p><a href="http://blog.csdn.net/lemonxq/article/details/72676005" target="_blank" rel="noopener">Hexo静态博客</a><br><a href="https://www.cnblogs.com/visugar/p/6821777.html" target="_blank" rel="noopener">Hexo从零开始搭建</a>  </p>
+<h3 id="添加菜单项"><a href="#添加菜单项" class="headerlink" title="添加菜单项"></a><strong>添加菜单项</strong></h3><ol>
 <li><p>在menu下面取消注释</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">  home: / || home</span><br><span class="line">  about: /about/ || user</span><br><span class="line">  tags: /tags/ || tags</span><br><span class="line">  categories: /categories/ || th</span><br><span class="line">  archives: /archives/ || archive</span><br><span class="line">  #schedule: /schedule/ || calendar</span><br><span class="line">  #sitemap: /sitemap.xml || sitemap</span><br><span class="line">  #commonweal: /404/ || heartbeat</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>新建一个相关的页面  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo new page &quot;tags&quot;</span><br><span class="line">```  </span><br><span class="line">3. 在相关文件夹的index.md里面加上***type***属性</span><br></pre></td></tr></table></figure>
+<li><p>新建一个相关的页面<br><code>hexo new page “tags”</code></p>
+</li>
+<li><p>在相关文件夹的index.md里面加上<strong>type</strong>属性<br><code>type: tags</code></p>
 </li>
 </ol>
-<p>title:<br>type: tags<br>date: 2018-02-19 16:17:01<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### **新建文章**</span><br><span class="line">1. 创建文章</span><br></pre></td></tr></table></figure></p>
-<p>hexo new “Hexo教程”<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2. 编辑文章的属性</span><br></pre></td></tr></table></figure></p>
-<p>title: hexo的几个基本操作<br>date: 2018-02-19 16:36:58<br>tags: hexo<br>categories: hexo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### **调试与发布**</span><br><span class="line">- 调试</span><br></pre></td></tr></table></figure></p>
-<p>hexo s –debug<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- 发布到github.io</span><br></pre></td></tr></table></figure></p>
-<p>hexo g<br>hexo d<br><code>`</code></p>
-<h3 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a><strong>基础配置</strong></h3><p><a href="http://blog.csdn.net/lemonxq/article/details/72676005" target="_blank" rel="noopener">Hexo静态博客</a><br><a href="https://www.cnblogs.com/visugar/p/6821777.html" target="_blank" rel="noopener">Hexo从零开始搭建</a></p>
+<h3 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a><strong>新建文章</strong></h3><ol>
+<li><p>创建文章</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new &quot;Hexo教程&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编辑文章的属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">title: hexo的几个基本操作</span><br><span class="line">date: 2018-02-19 16:36:58</span><br><span class="line">tags: hexo</span><br><span class="line">categories: hexo</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="调试与发布"><a href="#调试与发布" class="headerlink" title="调试与发布"></a><strong>调试与发布</strong></h3><ul>
+<li><p>调试(本地的改动马上就能看见)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s --debug</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发布到github.io</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 <h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a><strong>注意</strong></h3><ul>
 <li><p>站点配置文件与主题配置文件同名<strong><em>_config.yml</em></strong><br>这俩的<strong><em>timezone</em></strong>一定要一样，比如<strong><em>Asia/Shanghai</em></strong><br>不然会有奇怪的错误，非常难排查</p>
 </li>
 <li><p><strong><em>yourgithubusername.github.io</em></strong>一定要按照这个格式创建新项目，不然相关的网站会找不到</p>
+</li>
+<li><p>markdown在<strong><em>hexo</em></strong>页面上有时候会显示得和其他编辑器(atom、mou)不一致</p>
 </li>
 </ul>
 
