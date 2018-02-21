@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/icon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="录制原理 UiAutomatorViewer是AndroidSDK自带的一个分析App的工具通过这个工具，能够很清楚的找到每一页的所有控件以及他们的的层次结构 只要我们每点击一个控件，记录它的ID，再通过adb控制手机点击相应位置，然后跳转到相应的页面即可，不断这样循环，就能通过记录一组用户点击过控件来录制用户的操作   通过解压缩，我们能够得到UiAutomatorViewer的源码在源码里面添">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于UiAutomatorViewer二次开发的Android脚本录制工具">
+<meta property="og:url" content="http://yoursite.com/2018/02/21/基于uiautomator二次开发的Android脚本录制工具/index.html">
+<meta property="og:site_name" content="人生无限公司">
+<meta property="og:description" content="录制原理 UiAutomatorViewer是AndroidSDK自带的一个分析App的工具通过这个工具，能够很清楚的找到每一页的所有控件以及他们的的层次结构 只要我们每点击一个控件，记录它的ID，再通过adb控制手机点击相应位置，然后跳转到相应的页面即可，不断这样循环，就能通过记录一组用户点击过控件来录制用户的操作   通过解压缩，我们能够得到UiAutomatorViewer的源码在源码里面添">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/sadasdsdf.png">
+<meta property="og:updated_time" content="2018-02-21T14:42:47.887Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于UiAutomatorViewer二次开发的Android脚本录制工具">
+<meta name="twitter:description" content="录制原理 UiAutomatorViewer是AndroidSDK自带的一个分析App的工具通过这个工具，能够很清楚的找到每一页的所有控件以及他们的的层次结构 只要我们每点击一个控件，记录它的ID，再通过adb控制手机点击相应位置，然后跳转到相应的页面即可，不断这样循环，就能通过记录一组用户点击过控件来录制用户的操作   通过解压缩，我们能够得到UiAutomatorViewer的源码在源码里面添">
+<meta name="twitter:image" content="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/sadasdsdf.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/21/基于uiautomator二次开发的Android脚本录制工具/"/>
+
+
+
+
+
+  <title>基于UiAutomatorViewer二次开发的Android脚本录制工具 | 人生无限公司</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">人生无限公司</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">五流游戏玩家/四流动漫迷/三流吃货/二流程序员/一点五流书法爱好者</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            文章
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            书法
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            简历
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/21/基于uiautomator二次开发的Android脚本录制工具/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鼓楼区小码农">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/touxiang.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="人生无限公司">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于UiAutomatorViewer二次开发的Android脚本录制工具</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-21T21:15:08+08:00">
+                2018-02-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/基于UiAutomatorViewer二次开发的Android脚本录制工具/" itemprop="url" rel="index">
+                    <span itemprop="name">基于UiAutomatorViewer二次开发的Android脚本录制工具</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="录制原理"><a href="#录制原理" class="headerlink" title="录制原理"></a>录制原理</h2><ul>
+<li>UiAutomatorViewer是AndroidSDK自带的一个分析App的工具<br>通过这个工具，能够很清楚的找到每一页的所有控件以及他们的的层次结构<br><img src="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/sadasdsdf.png" alt=""></li>
+<li>只要我们每点击一个控件，记录它的ID，再通过adb控制手机点击相应位置，然后跳转到相应的页面即可，不断这样循环，就能通过记录一组用户点击过控件来录制用户的操作  </li>
+<li>通过解压缩，我们能够得到UiAutomatorViewer的源码<br>在源码里面添加鼠标点击控件后的操作流程即可</li>
+</ul>
+<h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><ul>
+<li>自定义鼠标事件监控函数，每当鼠标点击控件，记录当前的控件ID</li>
+<li>用户滑动屏幕，点击Home键的事件也要记录</li>
+<li>每次的事件都用一个StringBuffer来记录，最后再写到文件里</li>
+</ul>
+<h2 id="添加Action"><a href="#添加Action" class="headerlink" title="添加Action"></a>添加Action</h2><p>首先添加几个新Action，负责脚本录制的各种操作</p>
+<ul>
+<li><p>RecordAction 负责开始/结束/记录脚本</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">//开始/结束录制</span></span><br><span class="line">	<span class="keyword">if</span>(isRun == <span class="keyword">false</span>)&#123;</span><br><span class="line"></span><br><span class="line">		isRun = <span class="keyword">true</span>;</span><br><span class="line">		tempScript.append(<span class="string">"录制开始\n"</span>);</span><br><span class="line">		tempScript.append(System.currentTimeMillis()+<span class="string">"\n"</span>);</span><br><span class="line"></span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line"></span><br><span class="line">		isRun = <span class="keyword">false</span>;</span><br><span class="line">		tempScript.append(<span class="string">"录制结束\n"</span>);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			File file = <span class="keyword">new</span> File(<span class="string">"D:\\a.txt"</span>);</span><br><span class="line">               <span class="keyword">if</span>(!file.exists())&#123;</span><br><span class="line">                   file.createNewFile();</span><br><span class="line">               &#125;</span><br><span class="line">			FileOutputStream out = <span class="keyword">new</span> FileOutputStream(file,<span class="keyword">false</span>);</span><br><span class="line">			out.write(tempScript.toString().getBytes(<span class="string">"utf-8"</span>));</span><br><span class="line">			out.close();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</span><br><span class="line">			<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">			<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">			<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">//每次点击控件，就在字符串里面添加相应控件ID</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">addScript</span><span class="params">(String str)</span></span>&#123;</span><br><span class="line">	tempScript.append(str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>BackButtonAction 模拟用户点击返回按钮</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> RecordAction.addScript(<span class="string">"点击返回\n"</span>);</span><br><span class="line">RecordAction.addScript(System.currentTimeMillis()+<span class="string">"\n"</span>);</span><br><span class="line">RecordAction.addScript(<span class="string">"返回结束\n"</span>);</span><br><span class="line">Runtime.getRuntime().exec(<span class="string">"adb shell input keyevent 4"</span>);</span><br><span class="line"><span class="comment">//刷新页面</span></span><br><span class="line">UiAutomatorViewer window=UiAutomatorViewer.getInstance();</span><br><span class="line">ScreenshotAction screenshot=<span class="keyword">new</span> ScreenshotAction(window, <span class="keyword">true</span>);</span><br><span class="line">screenshot.run();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>UpButtonAction 模拟用户向上滑动屏幕</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> RecordAction.addScript(<span class="string">"上滑操作\n"</span>);</span><br><span class="line">RecordAction.addScript(System.currentTimeMillis()+<span class="string">"\n"</span>);</span><br><span class="line">RecordAction.addScript(<span class="string">"上滑结束\n"</span>);</span><br><span class="line">Runtime.getRuntime().exec(<span class="string">"adb shell input swipe 300 1000 300 500"</span>);</span><br><span class="line"><span class="comment">//刷新页面</span></span><br><span class="line">UiAutomatorViewer window=UiAutomatorViewer.getInstance();</span><br><span class="line">ScreenshotAction screenshot=<span class="keyword">new</span> ScreenshotAction(window, <span class="keyword">true</span>);</span><br><span class="line">screenshot.run();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>DownButtonAction 模拟用户向下滑动屏幕</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> RecordAction.addScript(<span class="string">"下滑操作\n"</span>);</span><br><span class="line">RecordAction.addScript(System.currentTimeMillis()+<span class="string">"\n"</span>);</span><br><span class="line">RecordAction.addScript(<span class="string">"下滑结束\n"</span>);</span><br><span class="line">Runtime.getRuntime().exec(<span class="string">"adb shell input swipe 300 500 300 1000"</span>);</span><br><span class="line"><span class="comment">//刷新页面</span></span><br><span class="line">UiAutomatorViewer window=UiAutomatorViewer.getInstance();</span><br><span class="line">ScreenshotAction screenshot=<span class="keyword">new</span> ScreenshotAction(window, <span class="keyword">true</span>);</span><br><span class="line">screenshot.run();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="添加点击控件操作"><a href="#添加点击控件操作" class="headerlink" title="添加点击控件操作"></a>添加点击控件操作</h2><p>在UiAutomatorView这个类里面，有鼠标事件监控的函数，在这个函数里面自定义点击后的操作即可  </p>
+<ul>
+<li><p>点击控件  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//鼠标事件监控</span></span><br><span class="line">mScreenshotCanvas.addMouseListener(<span class="keyword">new</span> MouseAdapter() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mouseUp</span><span class="params">(MouseEvent e)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mModel != <span class="keyword">null</span>) &#123;</span><br><span class="line">              mModel.toggleExploreMode();</span><br><span class="line">              redrawScreenshot();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">          <span class="comment">//1左键,2中键,3右键  </span></span><br><span class="line">        <span class="keyword">if</span>(e.button==<span class="number">3</span>)&#123;</span><br><span class="line">          Menu menu = <span class="keyword">new</span> Menu(mScreenshotCanvas);  </span><br><span class="line">          mScreenshotCanvas.setMenu(menu);  </span><br><span class="line"></span><br><span class="line">                    <span class="comment">//“控件点击”设置监控事件</span></span><br><span class="line">          MenuItem item = <span class="keyword">new</span> MenuItem(menu, SWT.PUSH);  </span><br><span class="line">          item.setText(<span class="string">"控件点击"</span>);</span><br><span class="line">          item.addSelectionListener(<span class="keyword">new</span> SelectionAdapter() &#123;</span><br><span class="line">          <span class="meta">@Override</span></span><br><span class="line">          <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">widgetSelected</span><span class="params">(SelectionEvent e)</span> </span>&#123;</span><br><span class="line">          <span class="comment">//获取当前选择的矩形区域</span></span><br><span class="line">          Rectangle rect = mModel.getCurrentDrawingRect();</span><br><span class="line">          UiNode currentNode = (UiNode)mModel.getSelectedNode();</span><br><span class="line">          <span class="comment">//当前事件 点击控件</span></span><br><span class="line">          RecordAction.addScript(<span class="string">"点击控件\n"</span>);</span><br><span class="line">          <span class="comment">//获取控件的text以及id</span></span><br><span class="line">          RecordAction.addScript(System.currentTimeMillis()+<span class="string">"\n"</span>);</span><br><span class="line">          <span class="keyword">if</span>(currentNode.getAttribute(<span class="string">"text"</span>)!=<span class="keyword">null</span>&amp;&amp;!(currentNode.getAttribute(<span class="string">"text"</span>).equals(<span class="string">""</span>)))&#123;</span><br><span class="line">          RecordAction.addScript(currentNode.getAttribute(<span class="string">"text"</span>)+<span class="string">"\n"</span>);</span><br><span class="line">          &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            RecordAction.addScript(<span class="string">"text is null\n"</span>);</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">if</span>(currentNode.getAttribute(<span class="string">"resource-id"</span>)!=<span class="keyword">null</span>&amp;&amp;!(currentNode.getAttribute(<span class="string">"resource-id"</span>).equals(<span class="string">""</span>)))&#123;</span><br><span class="line">          RecordAction.addScript(currentNode.getAttribute(<span class="string">"resource-id"</span>)+<span class="string">"\n"</span>);</span><br><span class="line">          &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">          RecordAction.addScript(<span class="string">"id is null\n"</span>);</span><br><span class="line">          &#125;</span><br><span class="line">          objectClick(rect);</span><br><span class="line">        &#125;;</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>点击手机的对应位置并更新页面</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">objectClick</span><span class="params">(Rectangle rectangle)</span></span>&#123;</span><br><span class="line">             <span class="comment">//点击控件的中心</span></span><br><span class="line">String adbStr = <span class="string">"adb shell input tap "</span>+(rectangle.x+rectangle.width/<span class="number">2</span>)+<span class="string">" "</span> +(rectangle.y+rectangle.height/<span class="number">2</span>);</span><br><span class="line">               <span class="comment">//调用cmd去执行</span></span><br><span class="line">execCmd(adbStr);</span><br><span class="line">               <span class="comment">//刷新页面</span></span><br><span class="line">UiAutomatorViewer window=UiAutomatorViewer.getInstance();</span><br><span class="line">ScreenshotAction screenshot=<span class="keyword">new</span> ScreenshotAction(window, <span class="keyword">true</span>);</span><br><span class="line">screenshot.run();</span><br><span class="line">           &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="回放脚本"><a href="#回放脚本" class="headerlink" title="回放脚本"></a>回放脚本</h2><p>读脚本文件，根据不同的事件类型，进行不同的操作即可</p>
+<ul>
+<li>点击控件，使用Appium，通过控件ID或text找到控件，进行点击</li>
+<li>上滑/下滑/返回，通过ADB命令控制手机即可</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(!((sb=bf.readLine()).equals(<span class="string">"录制结束"</span>)))&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">switch</span>(sb)&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span><span class="string">"点击控件"</span>:&#123;</span><br><span class="line">t2 = Integer.parseInt(bf.readLine().substring(<span class="number">5</span>));</span><br><span class="line">System.out.println(<span class="string">"等待"</span>+(t2-t1)/<span class="number">2</span>+<span class="string">"毫秒"</span>);</span><br><span class="line">Thread.sleep((t2-t1)/<span class="number">2</span>);</span><br><span class="line">t1=t2;</span><br><span class="line">String text = bf.readLine();</span><br><span class="line">System.out.println(<span class="string">"点击控件"</span>);</span><br><span class="line"><span class="keyword">if</span>(!(text.equals(<span class="string">"text is null\n"</span>)))&#123;</span><br><span class="line">driver.findElementByAndroidUIAutomator(<span class="string">"text(\""</span>+text+<span class="string">"\")"</span>).click();</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">String id = bf.readLine();</span><br><span class="line">driver.findElementById(id).click();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span><span class="string">"点击返回"</span>:&#123;</span><br><span class="line">t2 = Integer.parseInt(bf.readLine().substring(<span class="number">5</span>));</span><br><span class="line">System.out.println(<span class="string">"等待"</span>+(t2-t1)/<span class="number">2</span>+<span class="string">"毫秒"</span>);</span><br><span class="line">Thread.sleep((t2-t1)/<span class="number">2</span>);</span><br><span class="line">t1=t2;</span><br><span class="line">execCmd(<span class="string">"adb shell input keyevent 4"</span>);</span><br><span class="line">System.out.println(<span class="string">"点击返回"</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span><span class="string">"上滑操作"</span>:&#123;</span><br><span class="line">t2 = Integer.parseInt(bf.readLine().substring(<span class="number">5</span>));</span><br><span class="line">System.out.println(<span class="string">"等待"</span>+(t2-t1)/<span class="number">2</span>+<span class="string">"毫秒"</span>);</span><br><span class="line">Thread.sleep((t2-t1)/<span class="number">2</span>);</span><br><span class="line">t1=t2;</span><br><span class="line">execCmd(<span class="string">"adb shell input swipe 300 1000 300 500"</span>);</span><br><span class="line">System.out.println(<span class="string">"上滑操作"</span>);</span><br><span class="line">&#125;<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span><span class="string">"下滑操作"</span>:&#123;</span><br><span class="line">t2 = Integer.parseInt(bf.readLine().substring(<span class="number">5</span>));</span><br><span class="line">System.out.println(<span class="string">"等待"</span>+(t2-t1)/<span class="number">2</span>+<span class="string">"毫秒"</span>);</span><br><span class="line">Thread.sleep((t2-t1)/<span class="number">2</span>);</span><br><span class="line">t1=t2;</span><br><span class="line">execCmd(<span class="string">"adb shell input swipe 300 500 300 1000"</span>);</span><br><span class="line">System.out.println(<span class="string">"下滑操作"</span>);</span><br><span class="line">&#125;<span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/21/Android投屏显示以及反向控制的的思路和实现/" rel="next" title="Android设备投屏显示以及反向控制的的思路和实现">
+                <i class="fa fa-chevron-left"></i> Android设备投屏显示以及反向控制的的思路和实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/touxiang.jpeg"
+                alt="鼓楼区小码农" />
+            
+              <p class="site-author-name" itemprop="name">鼓楼区小码农</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#录制原理"><span class="nav-number">1.</span> <span class="nav-text">录制原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现思路"><span class="nav-number">2.</span> <span class="nav-text">实现思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加Action"><span class="nav-number">3.</span> <span class="nav-text">添加Action</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加点击控件操作"><span class="nav-number">4.</span> <span class="nav-text">添加点击控件操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回放脚本"><span class="nav-number">5.</span> <span class="nav-text">回放脚本</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">鼓楼区小码农</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
