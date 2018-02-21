@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/icon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,JavaScript," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="实现效果需要在前端页面对Android设备进行控制，实现远程操控的效果。整个Demo完成后录制了视频上传到了B站演示视频 整体思路    主要就是通过拿到手机屏幕的图像，然后显示在前端页面。然后通过前端页面监控用户鼠标事件，反向控制Android设备   投屏显示思路投屏显示主要的实现方法有两种  通过不断获取手机的屏幕截图，上传到服务器。前端页面不断显示从服务器拿到的图片，达到动态显示手机屏幕的">
+<meta name="keywords" content="Android,JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android设备投屏显示以及反向控制的的思路和实现">
+<meta property="og:url" content="http://yoursite.com/2018/02/21/Android投屏显示以及反向控制的的思路和实现/index.html">
+<meta property="og:site_name" content="人生无限公司">
+<meta property="og:description" content="实现效果需要在前端页面对Android设备进行控制，实现远程操控的效果。整个Demo完成后录制了视频上传到了B站演示视频 整体思路    主要就是通过拿到手机屏幕的图像，然后显示在前端页面。然后通过前端页面监控用户鼠标事件，反向控制Android设备   投屏显示思路投屏显示主要的实现方法有两种  通过不断获取手机的屏幕截图，上传到服务器。前端页面不断显示从服务器拿到的图片，达到动态显示手机屏幕的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/asdas.png">
+<meta property="og:image" content="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/wadasghhah.png">
+<meta property="og:image" content="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/asdsaghhhsadas.png">
+<meta property="og:updated_time" content="2018-02-21T04:21:28.038Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android设备投屏显示以及反向控制的的思路和实现">
+<meta name="twitter:description" content="实现效果需要在前端页面对Android设备进行控制，实现远程操控的效果。整个Demo完成后录制了视频上传到了B站演示视频 整体思路    主要就是通过拿到手机屏幕的图像，然后显示在前端页面。然后通过前端页面监控用户鼠标事件，反向控制Android设备   投屏显示思路投屏显示主要的实现方法有两种  通过不断获取手机的屏幕截图，上传到服务器。前端页面不断显示从服务器拿到的图片，达到动态显示手机屏幕的">
+<meta name="twitter:image" content="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/asdas.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/21/Android投屏显示以及反向控制的的思路和实现/"/>
+
+
+
+
+
+  <title>Android设备投屏显示以及反向控制的的思路和实现 | 人生无限公司</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">人生无限公司</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">五流游戏玩家/四流动漫迷/三流吃货/二流程序员/一点五流书法爱好者</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            文章
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            书法
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            简历
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/21/Android投屏显示以及反向控制的的思路和实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鼓楼区小码农">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/touxiang.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="人生无限公司">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android设备投屏显示以及反向控制的的思路和实现</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-21T10:18:14+08:00">
+                2018-02-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/Android设备投屏显示以及反向控制的的思路和实现/" itemprop="url" rel="index">
+                    <span itemprop="name">Android设备投屏显示以及反向控制的的思路和实现</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="实现效果"><a href="#实现效果" class="headerlink" title="实现效果"></a>实现效果</h2><p>需要在前端页面对Android设备进行控制，实现远程操控的效果。<br>整个Demo完成后录制了视频上传到了B站<br><a href="https://www.bilibili.com/video/av19717893/" target="_blank" rel="noopener">演示视频</a></p>
+<h2 id="整体思路"><a href="#整体思路" class="headerlink" title="整体思路"></a>整体思路</h2><p><img src="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/asdas.png" alt="">   </p>
+<p>主要就是通过拿到手机屏幕的图像，然后显示在前端页面。<br>然后通过前端页面监控用户鼠标事件，反向控制Android设备  </p>
+<h2 id="投屏显示"><a href="#投屏显示" class="headerlink" title="投屏显示"></a>投屏显示</h2><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>投屏显示主要的实现方法有两种</p>
+<ul>
+<li><p>通过不断获取手机的屏幕截图，上传到服务器。前端页面不断显示从服务器拿到的图片，达到动态显示手机屏幕的效果。</p>
+</li>
+<li><p>通过获取设备屏幕视频流，实时上传服务器。服务器拿到视频流后转发到前端页面，前端页面实时播放视频流，达到动态显示手机屏幕的效果。</p>
+</li>
+</ul>
+<p>经过思考，最后选择了第一种方法。第二种方法有几个不适合的地方，主要如下</p>
+<ol>
+<li><p>获取屏幕视频流比较困难。使用<strong>MediaRecoder</strong>没法获取实时的视频流。他只能录制屏幕然后直接保持在手机里。就算结合<strong>localsocket</strong>来使用，也只能在别的线程获取到不完整的视频流，无法播放。查了很久找到一个获取视频流的接口<strong>MediaCodec</strong>，但是使用起来不方便，发送视频流的时候还需要手动添加东西。</p>
+</li>
+<li><p>腾讯云1Mbps的服务器撑不起视频流的流量。</p>
+</li>
+<li>前端页面播放RTMP视频流麻烦。</li>
+</ol>
+<p>最终选择了获取手机屏幕截图的方法。</p>
+<h3 id="获取手机实时截图"><a href="#获取手机实时截图" class="headerlink" title="获取手机实时截图"></a>获取手机实时截图</h3><p>参考之前的文章<a href="https://wzb19960208.github.io/2018/02/19/Android%E6%89%8B%E6%9C%BA%E6%88%AA%E5%B1%8F%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" target="_blank" rel="noopener">Android手机截屏的几种方法</a><br>但是每个方法之间也有差异</p>
+<ul>
+<li>ADB命令截图方便，但是每张截图之间间隔大概1.5-2s，前端看起来实时效果很差。使用ADB投屏的具体演示可以参考我在B站的投稿视频<a href="https://www.bilibili.com/video/av17380863/" target="_blank" rel="noopener">ADB投屏演示</a></li>
+<li>ImageReader，单张截图非常快，屏幕在动的时候获取新截图也很快。但是经过测试，容易存在一些有损截图，导致前端显示偶尔闪烁花屏，用户体验不好。开始我以为是腾讯云服务器带宽太小导致的，后来压缩图片后发现还是这样。<br><img src="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/wadasghhah.png" alt="">  </li>
+</ul>
+<p>经过调查，发现一个开源的截图工具MiniCap，经过NDK的优化，截图非常快。并且截图上传到服务器基本没有损坏的图片，效果非常好。关于MiniCap，可以参考这两篇文章。<br><a href="https://testerhome.com/topics/3115" target="_blank" rel="noopener">MiniCap原理</a><br><a href="http://blog.csdn.net/kyotrue/article/details/78657578" target="_blank" rel="noopener">MiniCap使用</a></p>
+<h3 id="前端显示手机截图"><a href="#前端显示手机截图" class="headerlink" title="前端显示手机截图"></a>前端显示手机截图</h3><p>主要流程如图所示<br><img src="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/asdsaghhhsadas.png" alt=""></p>
+<h4 id="上传服务器"><a href="#上传服务器" class="headerlink" title="上传服务器"></a>上传服务器</h4><p>获取截图后，要不断把数据上传到服务器上。只要服务器不断监听数据，接收到了马上处理即可。<br>关于MiniCap与服务器通信的原理，可以参考这篇文章<br><a href="https://testerhome.com/topics/8851" target="_blank" rel="noopener">实时显示设备截图功能源码分析</a></p>
+<h4 id="服务器处理图片"><a href="#服务器处理图片" class="headerlink" title="服务器处理图片"></a>服务器处理图片</h4><p>服务器要做的就只有两件事</p>
+<ul>
+<li><p>监听socket端口，处理图片数据  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//tcp连接上1718，从服务端接收图片</span></span><br><span class="line"><span class="keyword">var</span> stream = net.connect(&#123;</span><br><span class="line">  port: <span class="number">1718</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//tcp触发readable事件，处理图片数据</span></span><br><span class="line"><span class="comment">//具体的处理函数是tryRead，拷贝即可</span></span><br><span class="line">stream.on(<span class="string">'readable'</span>, tryRead)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过websocket，主动给前端转发实时截图</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// 在http服务上绑定了websocket</span></span><br><span class="line"><span class="keyword">var</span> server = http.createServer(app)</span><br><span class="line"><span class="keyword">var</span> wss = <span class="keyword">new</span> WebSocketServer(&#123; <span class="attr">server</span>: server &#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> funtion tryRead()&#123;</span><br><span class="line">   <span class="comment">//处理数据...</span></span><br><span class="line"> <span class="comment">//ws发送数据</span></span><br><span class="line"> ws.send(frameBody, &#123;<span class="attr">binary</span>: <span class="literal">true</span>&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="前端显示图片"><a href="#前端显示图片" class="headerlink" title="前端显示图片"></a>前端显示图片</h4><p>前端要做的事情也只有两件</p>
+<ul>
+<li><p>通过websocket连接服务器，获取实时截图  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ws = <span class="keyword">new</span> WebSocket(<span class="string">'ws://localhost:9002'</span>, <span class="string">'minicap'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//收到ws传来的数据</span></span><br><span class="line">ws.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">message</span>) </span>&#123;todo...&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>不断显示新截图<br>因为服务器传过来的并不是图片，而是二进制流。前端怎么显示二进制流呢？经过调查可以使用Blob，它会将二进制流转化成img可以直接使用的src，所以只有一有新图片就更新src即可  </p>
+<pre><code class="JavaScript"><span class="comment">//将图片二进制数据转化为blob</span>
+<span class="keyword">var</span> blob = <span class="keyword">new</span> Blob([message.data], {<span class="attr">type</span>: <span class="string">'image/jpeg'</span>})
+<span class="keyword">var</span> URL = <span class="built_in">window</span>.URL || <span class="built_in">window</span>.webkitURL
+<span class="keyword">var</span> img = <span class="keyword">new</span> Image()
+
+<span class="comment">//将blob的数据转化为 src能直接显示的地址</span>
+<span class="keyword">var</span> u = URL.createObjectURL(blob)
+<span class="comment">//更新图片地址</span>
+img.src = u
+</code></pre>
+</li>
+</ul>
+<p>至此，投屏显示完成  </p>
+<h2 id="反向控制"><a href="#反向控制" class="headerlink" title="反向控制"></a>反向控制</h2><h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><p>思路比较清晰，这里走的弯路也比较少，其实主要就两件事</p>
+<ul>
+<li>获取前端的鼠标事件，概括起来就两种：滑动以及点击</li>
+<li>将事件坐标通过websocket传到服务器，对设备进行控制  </li>
+</ul>
+<p>这里控制设备有点小技巧，一是通过服务器跑终端来调用adb shell input来控制；二是通过MiniTouch来控制。两个我都尝试过，MiniTouch要灵敏一点。两者都是传入点击坐标以及滑动的开始和结束坐标就能使用，差别不大。具体的Home以及Back按键，还是用的adb。</p>
+<h3 id="获取屏幕事件以及控制手机"><a href="#获取屏幕事件以及控制手机" class="headerlink" title="获取屏幕事件以及控制手机"></a>获取屏幕事件以及控制手机</h3><p>前端的鼠标事件有三种，分别是鼠标按下/提起点击。点击太笼统了，得不到想要的的事件。所以可以通过按下和提起来区分事件</p>
+<ul>
+<li>按下和提起的x，y坐标一致的，就是点击事件</li>
+<li>按下和提起的x，y坐标不同的，就是滑动事件</li>
+</ul>
+<p>关键代码如下  </p>
+<pre><code class="js"><span class="comment">//获取鼠标事件</span>
+layer.onmousedown = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>{
+  <span class="keyword">var</span> e = event || <span class="built_in">window</span>.event
+  <span class="keyword">var</span> scrollX = <span class="built_in">document</span>.documentElement.scrollLeft || <span class="built_in">document</span>.body.scrollLeft
+  <span class="keyword">var</span> scrollY = <span class="built_in">document</span>.documentElement.scrollTop || <span class="built_in">document</span>.body.scrollTop
+  downX = e.pageX || e.clientX + scrollX
+  downY = e.pageY || e.clientY + scrollY
+
+}
+layer.onmouseup = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>{
+  <span class="keyword">var</span> e = event || <span class="built_in">window</span>.event
+  <span class="keyword">var</span> scrollX = <span class="built_in">document</span>.documentElement.scrollLeft || <span class="built_in">document</span>.body.scrollLeft
+  <span class="keyword">var</span> scrollY = <span class="built_in">document</span>.documentElement.scrollTop || <span class="built_in">document</span>.body.scrollTop
+  <span class="keyword">var</span> x = e.pageX || e.clientX + scrollX
+  <span class="keyword">var</span> y = e.pageY || e.clientY + scrollY
+  <span class="keyword">if</span>(x!=downX||y!=downY){
+    ws.send(<span class="string">'swipefengefu'</span>+downX+<span class="string">'fengefu'</span>+downY+<span class="string">'fengefu'</span>+x+<span class="string">'fengefu'</span>+y)
+  }<span class="keyword">else</span>{
+    ws.send(<span class="string">'clickfengefu'</span>+x+<span class="string">'fengefu'</span>+y)
+  }   
+
+  <span class="comment">//使用minitouch 触控手机</span>
+  ws.on(<span class="string">'message'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>{
+    <span class="keyword">if</span>(data==<span class="string">'home'</span>){
+      cmd.run(<span class="string">'adb shell input keyevent 3\n'</span>);  
+    }<span class="keyword">else</span> <span class="keyword">if</span>(data ==<span class="string">'back'</span>){
+      cmd.run(<span class="string">'adb shell input keyevent 4\n'</span>);
+    }
+    <span class="keyword">else</span> <span class="keyword">if</span>(data.indexOf(<span class="string">"fengefu"</span>) &gt; <span class="number">0</span> ){
+      <span class="keyword">let</span> index = data.split(<span class="string">"fengefu"</span>);
+      <span class="keyword">if</span>(index[<span class="number">0</span>]==<span class="string">'click'</span>){
+          minitouch.write(<span class="string">'d 0 '</span>+index[<span class="number">1</span>]+<span class="string">' '</span>+ index[<span class="number">2</span>]+<span class="string">' 50\n'</span>);
+          minitouch.write(<span class="string">'c\n'</span>);
+          minitouch.write(<span class="string">'u 0\n'</span>);
+          minitouch.write(<span class="string">'c\n'</span>);
+      }<span class="keyword">else</span> <span class="keyword">if</span> (index[<span class="number">0</span>]==<span class="string">'swipe'</span>) {
+          minitouch.write(<span class="string">'d 0 '</span>+index[<span class="number">1</span>]+<span class="string">' '</span>+ index[<span class="number">2</span>]+<span class="string">' 50\n'</span>);
+          minitouch.write(<span class="string">'c\n'</span>);
+          minitouch.write(<span class="string">'m 0 '</span>+index[<span class="number">3</span>]+<span class="string">' '</span>+ index[<span class="number">4</span>]+<span class="string">' 50\n'</span>);
+          minitouch.write(<span class="string">'c\n'</span>);
+          minitouch.write(<span class="string">'u 0\n'</span>);
+          minitouch.write(<span class="string">'c\n'</span>);
+      }
+
+    } <span class="keyword">else</span>{
+      <span class="built_in">console</span>.info(data)
+    }
+  })
+</code></pre>
+<p>至此，反向控制完成  </p>
+<p><br></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>整个流程走了不少弯路，每个步骤每种方法都是在很多坑里面纠结了很久才决定的，钻研精神还是要有，但是还是太坑了</li>
+<li>因为markdown显示不一致的问题，反向控制的代码写在一起了</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/19/markdown小技巧/" rel="next" title="markdown小技巧">
+                <i class="fa fa-chevron-left"></i> markdown小技巧
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/touxiang.jpeg"
+                alt="鼓楼区小码农" />
+            
+              <p class="site-author-name" itemprop="name">鼓楼区小码农</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#实现效果"><span class="nav-number">1.</span> <span class="nav-text">实现效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整体思路"><span class="nav-number">2.</span> <span class="nav-text">整体思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#投屏显示"><span class="nav-number">3.</span> <span class="nav-text">投屏显示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路"><span class="nav-number">3.1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取手机实时截图"><span class="nav-number">3.2.</span> <span class="nav-text">获取手机实时截图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前端显示手机截图"><span class="nav-number">3.3.</span> <span class="nav-text">前端显示手机截图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#上传服务器"><span class="nav-number">3.3.1.</span> <span class="nav-text">上传服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务器处理图片"><span class="nav-number">3.3.2.</span> <span class="nav-text">服务器处理图片</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#前端显示图片"><span class="nav-number">3.3.3.</span> <span class="nav-text">前端显示图片</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反向控制"><span class="nav-number">4.</span> <span class="nav-text">反向控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路-1"><span class="nav-number">4.1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取屏幕事件以及控制手机"><span class="nav-number">4.2.</span> <span class="nav-text">获取屏幕事件以及控制手机</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">鼓楼区小码农</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
