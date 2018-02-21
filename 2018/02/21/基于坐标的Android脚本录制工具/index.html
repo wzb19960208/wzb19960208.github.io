@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/icon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="基于控件录制脚本的不足 很多控件是没有ID的，所以单纯使用控件来录制脚本，效果很差 用户使用小键盘等输入的时候，没法通过ID录制 WebView下的操作无法录制  原理 通过adb getevent能够获得设备屏幕上的所有操作，把用户的操作记录下来即可具体怎么看懂各种事件，可以参考这篇文章 通过adb sendevent来回放脚本    要注意的是，adb getevent获得的数据全是16进制的">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于坐标的Android脚本录制工具">
+<meta property="og:url" content="http://yoursite.com/2018/02/21/基于坐标的Android脚本录制工具/index.html">
+<meta property="og:site_name" content="人生无限公司">
+<meta property="og:description" content="基于控件录制脚本的不足 很多控件是没有ID的，所以单纯使用控件来录制脚本，效果很差 用户使用小键盘等输入的时候，没法通过ID录制 WebView下的操作无法录制  原理 通过adb getevent能够获得设备屏幕上的所有操作，把用户的操作记录下来即可具体怎么看懂各种事件，可以参考这篇文章 通过adb sendevent来回放脚本    要注意的是，adb getevent获得的数据全是16进制的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-21T15:36:12.069Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于坐标的Android脚本录制工具">
+<meta name="twitter:description" content="基于控件录制脚本的不足 很多控件是没有ID的，所以单纯使用控件来录制脚本，效果很差 用户使用小键盘等输入的时候，没法通过ID录制 WebView下的操作无法录制  原理 通过adb getevent能够获得设备屏幕上的所有操作，把用户的操作记录下来即可具体怎么看懂各种事件，可以参考这篇文章 通过adb sendevent来回放脚本    要注意的是，adb getevent获得的数据全是16进制的">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/21/基于坐标的Android脚本录制工具/"/>
+
+
+
+
+
+  <title>基于坐标的Android脚本录制工具 | 人生无限公司</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">人生无限公司</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">五流游戏玩家/四流动漫迷/三流吃货/二流程序员/一点五流书法爱好者</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            文章
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            书法
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            简历
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/21/基于坐标的Android脚本录制工具/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鼓楼区小码农">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/touxiang.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="人生无限公司">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于坐标的Android脚本录制工具</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-21T23:13:14+08:00">
+                2018-02-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/基于坐标的Android脚本录制工具/" itemprop="url" rel="index">
+                    <span itemprop="name">基于坐标的Android脚本录制工具</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="基于控件录制脚本的不足"><a href="#基于控件录制脚本的不足" class="headerlink" title="基于控件录制脚本的不足"></a>基于控件录制脚本的不足</h2><ul>
+<li>很多控件是没有ID的，所以单纯使用控件来录制脚本，效果很差</li>
+<li>用户使用小键盘等输入的时候，没法通过ID录制</li>
+<li>WebView下的操作无法录制</li>
+</ul>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><ul>
+<li>通过<code>adb getevent</code>能够获得设备屏幕上的所有操作，把用户的操作记录下来即可<br>具体怎么看懂各种事件，可以参考<a href="http://blog.csdn.net/fxdaniel/article/details/45846333" target="_blank" rel="noopener">这篇文章</a></li>
+<li>通过<code>adb sendevent</code>来回放脚本  </li>
+</ul>
+<p>要注意的是，<code>adb getevent</code>获得的数据全是16进制的，而<code>adb sendevent</code>需要的数据是10进制的，所有我们需要对原始的数据进行一些处理</p>
+<h2 id="录制脚本"><a href="#录制脚本" class="headerlink" title="录制脚本"></a>录制脚本</h2><p>经过多次尝试，总结出了各种事件的一点规律</p>
+<ul>
+<li>330 开头的是点击事件</li>
+<li>102 开头的是功能键</li>
+<li>滑动事件是一大堆点击事件的结合</li>
+<li>0 0 0是一个事件结束</li>
+</ul>
+<p>具体的录制代码如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(iterator.hasNext())&#123;</span><br><span class="line">        	String str = iterator.next();</span><br><span class="line">        	System.out.println(str);</span><br><span class="line">        	String[] step1 = str.split(<span class="string">":"</span>);</span><br><span class="line">        	String[] step2 = step1[<span class="number">1</span>].split(<span class="string">" "</span>);</span><br><span class="line">        	<span class="comment">//step2[0]是空字符串</span></span><br><span class="line">          <span class="comment">//对每个16进制进行转换</span></span><br><span class="line">        	step2[<span class="number">2</span>] = String.valueOf(Long.parseLong(step2[<span class="number">2</span>], <span class="number">16</span>));</span><br><span class="line">        	step2[<span class="number">3</span>] = String.valueOf(Long.parseLong(step2[<span class="number">3</span>], <span class="number">16</span>));</span><br><span class="line">        	<span class="keyword">if</span>(step2[<span class="number">2</span>].equals(<span class="string">"102"</span>)&amp;&amp;last!=<span class="number">0</span>)&#123;</span><br><span class="line">        		sb.append(<span class="string">"功能键\n"</span>);</span><br><span class="line">        		last=<span class="number">0</span>;</span><br><span class="line">        	&#125;<span class="keyword">else</span> <span class="keyword">if</span>(step2[<span class="number">2</span>].equals(<span class="string">"330"</span>)&amp;&amp;last!=<span class="number">1</span>)&#123;</span><br><span class="line">        		sb.append(<span class="string">"点击\n"</span>);</span><br><span class="line">        		last=<span class="number">1</span>;</span><br><span class="line">        	&#125;<span class="keyword">else</span> <span class="keyword">if</span>(step2[<span class="number">2</span>].equals(<span class="string">"0"</span>))&#123;</span><br><span class="line">        		<span class="keyword">if</span>(last==<span class="number">0</span>)&#123;</span><br><span class="line">        			last=-<span class="number">1</span>;</span><br><span class="line">        		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(last==<span class="number">1</span>)&#123;</span><br><span class="line">        			count++;</span><br><span class="line">        			<span class="keyword">if</span>(count==<span class="number">2</span>)&#123;</span><br><span class="line">        				last=-<span class="number">1</span>;</span><br><span class="line">        				count=<span class="number">0</span>;</span><br><span class="line">        			&#125;</span><br><span class="line">        		&#125;</span><br><span class="line">        	&#125;</span><br><span class="line">        	sb.append(<span class="string">"sendevent "</span>+step1[<span class="number">0</span>]+<span class="string">" "</span>+step2[<span class="number">1</span>]+<span class="string">" "</span>+step2[<span class="number">2</span>]+<span class="string">" "</span>+step2[<span class="number">3</span>]+<span class="string">"\n"</span>);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        sb.append(<span class="string">"录制结束\n"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>录制完成的脚本文件如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">点击</span><br><span class="line">sendevent /dev/input/event5 0001 330 1</span><br><span class="line">sendevent /dev/input/event5 0003 58 1</span><br><span class="line">sendevent /dev/input/event5 0003 53 276</span><br><span class="line">sendevent /dev/input/event5 0003 54 1115</span><br><span class="line">sendevent /dev/input/event5 0000 2 0</span><br><span class="line">sendevent /dev/input/event5 0000 0 0</span><br><span class="line">sendevent /dev/input/event5 0001 330 0</span><br><span class="line">sendevent /dev/input/event5 0000 2 0</span><br><span class="line">sendevent /dev/input/event5 0000 0 0</span><br></pre></td></tr></table></figure></p>
+<h2 id="回放脚本"><a href="#回放脚本" class="headerlink" title="回放脚本"></a>回放脚本</h2><p>读取脚本文件，根据不同的事件执行即可</p>
+<ul>
+<li>功能键 直接执行</li>
+<li>点击事件<br>因为滑动是一连串点击事件，所以所有的命令要一起执行<br>但是太快设备跟不上就会造成事件丢失，所以每个命令间隔50ms即可</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(!((sb=bf.readLine()).contains(<span class="string">"录制结束"</span>)))&#123;</span><br><span class="line">			<span class="keyword">if</span>(sb.contains(<span class="string">"功能键"</span>))&#123;</span><br><span class="line"></span><br><span class="line">				<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;<span class="number">3</span>;i++)&#123;</span><br><span class="line">					sb=bf.readLine();</span><br><span class="line">        			dataOutputStream.writeBytes(sb+<span class="string">"\n"</span>);   </span><br><span class="line">                    dataOutputStream.flush();</span><br><span class="line">        		&#125;</span><br><span class="line"></span><br><span class="line">        		Thread.sleep(<span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">        	&#125;<span class="keyword">else</span> <span class="keyword">if</span>(sb.contains(<span class="string">"点击"</span>))&#123;</span><br><span class="line">        		<span class="comment">//有的点击不足10个 或者是滑动，多于10个</span></span><br><span class="line">        		<span class="keyword">for</span>(;;)&#123;</span><br><span class="line">        			sb=bf.readLine();</span><br><span class="line">        			<span class="keyword">if</span>(sb.contains(<span class="string">"功能键"</span>))&#123;</span><br><span class="line">        				<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j&lt;<span class="number">3</span>;j++)&#123;</span><br><span class="line">        					sb=bf.readLine();</span><br><span class="line">                			dataOutputStream.writeBytes(sb+<span class="string">"\n"</span>);   </span><br><span class="line">                            dataOutputStream.flush();</span><br><span class="line">                		&#125;</span><br><span class="line">        				<span class="keyword">break</span>;</span><br><span class="line">        			&#125;<span class="keyword">else</span> <span class="keyword">if</span>(sb.contains(<span class="string">"录制结束"</span>))&#123;</span><br><span class="line">        				<span class="keyword">return</span>;</span><br><span class="line">        			&#125;</span><br><span class="line">        			dataOutputStream.writeBytes(sb+<span class="string">"\n"</span>);   </span><br><span class="line">                    dataOutputStream.flush();</span><br><span class="line">                    Thread.sleep(<span class="number">50</span>);</span><br><span class="line">        		&#125;</span><br><span class="line">        		Thread.sleep(<span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        	&#125;</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h2><p>整个脚本录制回访工具完成后的演示视频上传到了B站<br><a href="https://www.bilibili.com/video/av17354958/" target="_blank" rel="noopener">视频演示</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/21/基于uiautomator二次开发的Android脚本录制工具/" rel="next" title="基于UiAutomatorViewer二次开发的Android脚本录制工具">
+                <i class="fa fa-chevron-left"></i> 基于UiAutomatorViewer二次开发的Android脚本录制工具
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/touxiang.jpeg"
+                alt="鼓楼区小码农" />
+            
+              <p class="site-author-name" itemprop="name">鼓楼区小码农</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于控件录制脚本的不足"><span class="nav-number">1.</span> <span class="nav-text">基于控件录制脚本的不足</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-number">2.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#录制脚本"><span class="nav-number">3.</span> <span class="nav-text">录制脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回放脚本"><span class="nav-number">4.</span> <span class="nav-text">回放脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#演示"><span class="nav-number">5.</span> <span class="nav-text">演示</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">鼓楼区小码农</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
