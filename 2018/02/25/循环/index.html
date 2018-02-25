@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/icon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="算法题," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="循环其实只是C语言里面的一点循环练习题,都是经典题目 乘方求a的n次方其实就是a自己乘自己n次1234567int a,n;scanf(&quot;%d%d&quot;,&amp;amp;a,&amp;amp;n);int result = 1;for(int i=0;i&amp;lt;n;i++)&amp;#123;  result*=a;&amp;#125;printf(&quot;%d&quot;,result); 最大值输入一组数据，求里面的最大值用一个变量记录当前的">
+<meta name="keywords" content="算法题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="循环">
+<meta property="og:url" content="http://yoursite.com/2018/02/25/循环/index.html">
+<meta property="og:site_name" content="人生无限公司">
+<meta property="og:description" content="循环其实只是C语言里面的一点循环练习题,都是经典题目 乘方求a的n次方其实就是a自己乘自己n次1234567int a,n;scanf(&quot;%d%d&quot;,&amp;amp;a,&amp;amp;n);int result = 1;for(int i=0;i&amp;lt;n;i++)&amp;#123;  result*=a;&amp;#125;printf(&quot;%d&quot;,result); 最大值输入一组数据，求里面的最大值用一个变量记录当前的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-25T12:33:23.872Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="循环">
+<meta name="twitter:description" content="循环其实只是C语言里面的一点循环练习题,都是经典题目 乘方求a的n次方其实就是a自己乘自己n次1234567int a,n;scanf(&quot;%d%d&quot;,&amp;amp;a,&amp;amp;n);int result = 1;for(int i=0;i&amp;lt;n;i++)&amp;#123;  result*=a;&amp;#125;printf(&quot;%d&quot;,result); 最大值输入一组数据，求里面的最大值用一个变量记录当前的">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/25/循环/"/>
+
+
+
+
+
+  <title>循环 | 人生无限公司</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">人生无限公司</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">五流游戏玩家/四流动漫迷/三流吃货/二流程序员/一点五流书法爱好者</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            文章
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            书法
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            简历
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/25/循环/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鼓楼区小码农">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/touxiang.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="人生无限公司">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">循环</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-25T20:02:28+08:00">
+                2018-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法题/" itemprop="url" rel="index">
+                    <span itemprop="name">算法题</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法题/循环/" itemprop="url" rel="index">
+                    <span itemprop="name">循环</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h2><p>其实只是C语言里面的一点循环练习题,都是经典题目</p>
+<h3 id="乘方"><a href="#乘方" class="headerlink" title="乘方"></a>乘方</h3><p>求a的n次方<br>其实就是a自己乘自己n次<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a,n;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;a,&amp;n);</span><br><span class="line"><span class="keyword">int</span> result = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">  result*=a;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%d"</span>,result);</span><br></pre></td></tr></table></figure></p>
+<h3 id="最大值"><a href="#最大值" class="headerlink" title="最大值"></a>最大值</h3><p>输入一组数据，求里面的最大值<br>用一个变量记录当前的最大值，遇到更大的就更新即可<br>注意的地方是这个变量的初值应是第一个数，自己设置初值(比如0)会有意外的问题(负数)<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//输入EOF(其实值是-1，但是不能输-1)结束 CTRL+C会导致命令行关闭</span></span><br><span class="line">	<span class="keyword">int</span> b,max;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;max);</span><br><span class="line">	<span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;b))&#123;</span><br><span class="line">		<span class="keyword">if</span>(b&gt;max)&#123;</span><br><span class="line">			max=b;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d"</span>,max);</span><br></pre></td></tr></table></figure></p>
+<h3 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h3><p>用两个数字分别保存数列最后的两位<br>新的一位只要通过两个相加即可<br>第k个数字就是循环k-2次就好了<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a1,a2,k;</span><br><span class="line">	a1 = <span class="number">1</span>;</span><br><span class="line">	a2 = <span class="number">1</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;k);</span><br><span class="line">	<span class="keyword">if</span>(k==<span class="number">1</span>||k==<span class="number">2</span>)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"1\n"</span>);</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">int</span> sum;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;k<span class="number">-2</span>;i++)&#123;</span><br><span class="line">			sum = a1+a2;</span><br><span class="line">			a1 = a2;</span><br><span class="line">			a2 = sum;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,sum);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="阶乘的和"><a href="#阶乘的和" class="headerlink" title="阶乘的和"></a>阶乘的和</h3><p>1！+2！+3！+…….+n！<br>直接求每个数的阶乘再相加，会有很多重复运算<br>比如算5！，前面<code>1x2x3x4</code>都是算过的<br>简单的方法是每次相乘直接相加即可，乘一个新的数就是新的阶乘了<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line"><span class="keyword">int</span> result = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">  result *= i;</span><br><span class="line">  sum += result;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%d"</span>,sum);</span><br></pre></td></tr></table></figure></p>
+<h3 id="找质数-素数"><a href="#找质数-素数" class="headerlink" title="找质数/素数"></a>找质数/素数</h3><p>非常经典的题目，有三种解法</p>
+<h4 id="直接求解"><a href="#直接求解" class="headerlink" title="直接求解"></a>直接求解</h4><p>对一个数n，看这个数能否被从2~n-1的数整除<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n;</span><br><span class="line">	<span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i =<span class="number">2</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="comment">//这里值得学习 通过判断k来确定有没有跳出循环</span></span><br><span class="line">		<span class="keyword">int</span> k;</span><br><span class="line">		<span class="keyword">for</span>(k=<span class="number">2</span>;k&lt;i;k++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(i%k==<span class="number">0</span>)</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(k==i)&#123;</span><br><span class="line">			<span class="built_in">cout</span>&lt;&lt;i&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="改进版"><a href="#改进版" class="headerlink" title="改进版"></a>改进版</h4><ul>
+<li>偶数肯定不是质数，2除外，所以偶数不需要检查了</li>
+<li>奇数才可能是质数，偶数无论如何都不会得到奇数，所以偶数不可能是奇数的因子</li>
+<li>遍历从2~n的平方根即可，因为大于n的平方根的数假设是因子，那么另一个因子肯定小于n的平方根，那么这个因子肯定已经遍历过了，所以不需要再算</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n;</span><br><span class="line">	<span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">	<span class="comment">//别漏了2</span></span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="number">2</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">  <span class="comment">//检查奇数即可</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">3</span>;i&lt;=n;i+=<span class="number">2</span>)&#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> k;</span><br><span class="line">		<span class="comment">//偶数不可能是奇数的因子</span></span><br><span class="line">		<span class="keyword">for</span>(k=<span class="number">3</span>;k&lt;i;k+=<span class="number">2</span>)&#123;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span>(i%k==<span class="number">0</span>)&#123;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="comment">//判断到平方根即可</span></span><br><span class="line">			<span class="keyword">if</span>(k*k&gt;i)&#123;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//注意这里也变了</span></span><br><span class="line">		<span class="keyword">if</span>(k*k&gt;i)</span><br><span class="line">			<span class="built_in">cout</span>&lt;&lt;i&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="筛选法"><a href="#筛选法" class="headerlink" title="筛选法"></a>筛选法</h4><p>牺牲了空间，这个比上面的方法还快，但是我不是很清楚怎么比较的</p>
+<ul>
+<li>将2~n的数字列出来</li>
+<li>从2开始，把每个素数的倍数都划掉，剩下的就全是素数了</li>
+<li>下一个开始的肯定是素数，因为它前面的数的倍数都被划掉了，它没有被划掉，就说明前面的数都不是它的因子  </li>
+</ul>
+<p>使用isPrime来表示N个数，下标是数值，值为0就代表被划掉，为1就是素数<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n;</span><br><span class="line">	<span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">	<span class="keyword">int</span> isPrime[n+<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">	isPrime[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">	isPrime[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//初始化</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i++)</span><br><span class="line">		isPrime[i] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i++)&#123;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//如果i是质数，则将其倍数全部划去</span></span><br><span class="line">		<span class="keyword">if</span>(isPrime[i])&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">2</span>;<span class="literal">true</span>;k++)&#123;</span><br><span class="line">				<span class="keyword">int</span> temp = i * k;</span><br><span class="line">				<span class="keyword">if</span>(temp&gt;n)</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				isPrime[temp] = <span class="number">0</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i =<span class="number">0</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(isPrime[i]==<span class="number">1</span>)</span><br><span class="line">			<span class="built_in">cout</span>&lt;&lt;i&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法题/" rel="tag"># 算法题</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/25/C语言程序设计··上/" rel="next" title="C语言程序设计·一">
+                <i class="fa fa-chevron-left"></i> C语言程序设计·一
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/touxiang.jpeg"
+                alt="鼓楼区小码农" />
+            
+              <p class="site-author-name" itemprop="name">鼓楼区小码农</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#循环"><span class="nav-number">1.</span> <span class="nav-text">循环</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#乘方"><span class="nav-number">1.1.</span> <span class="nav-text">乘方</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最大值"><span class="nav-number">1.2.</span> <span class="nav-text">最大值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#斐波那契数列"><span class="nav-number">1.3.</span> <span class="nav-text">斐波那契数列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#阶乘的和"><span class="nav-number">1.4.</span> <span class="nav-text">阶乘的和</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#找质数-素数"><span class="nav-number">1.5.</span> <span class="nav-text">找质数/素数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#直接求解"><span class="nav-number">1.5.1.</span> <span class="nav-text">直接求解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#改进版"><span class="nav-number">1.5.2.</span> <span class="nav-text">改进版</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#筛选法"><span class="nav-number">1.5.3.</span> <span class="nav-text">筛选法</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">鼓楼区小码农</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
