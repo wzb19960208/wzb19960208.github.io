@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/icon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C/C++," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="二维数组T a[n][m]  MxN个元素是在内存里一个挨着一个存放的 数组占用了一片连续的，大小为MxNxsizeof(T)字节的存储空间 每一行有M个元素 如果a[0][0]地址为n，那么a[i][j]地址为n+ixm+j 二维数组每一行，实际上是一个一维数组，a[0],a[1]可以看作是一维数组的名字，可以直接使用  函数 调用函数的语句之前用函数声明即可，不用定义 形参是实参的拷贝，形参的">
+<meta name="keywords" content="C&#x2F;C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C语言程序设计·二">
+<meta property="og:url" content="http://yoursite.com/2018/02/28/C语言程序设计·二/index.html">
+<meta property="og:site_name" content="人生无限公司">
+<meta property="og:description" content="二维数组T a[n][m]  MxN个元素是在内存里一个挨着一个存放的 数组占用了一片连续的，大小为MxNxsizeof(T)字节的存储空间 每一行有M个元素 如果a[0][0]地址为n，那么a[i][j]地址为n+ixm+j 二维数组每一行，实际上是一个一维数组，a[0],a[1]可以看作是一维数组的名字，可以直接使用  函数 调用函数的语句之前用函数声明即可，不用定义 形参是实参的拷贝，形参的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-03T11:51:38.574Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C语言程序设计·二">
+<meta name="twitter:description" content="二维数组T a[n][m]  MxN个元素是在内存里一个挨着一个存放的 数组占用了一片连续的，大小为MxNxsizeof(T)字节的存储空间 每一行有M个元素 如果a[0][0]地址为n，那么a[i][j]地址为n+ixm+j 二维数组每一行，实际上是一个一维数组，a[0],a[1]可以看作是一维数组的名字，可以直接使用  函数 调用函数的语句之前用函数声明即可，不用定义 形参是实参的拷贝，形参的">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/28/C语言程序设计·二/"/>
+
+
+
+
+
+  <title>C语言程序设计·二 | 人生无限公司</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">人生无限公司</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">五流游戏玩家/四流动漫迷/三流吃货/二流程序员/一点五流书法爱好者</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            文章
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            书法
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            简历
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/28/C语言程序设计·二/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鼓楼区小码农">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/touxiang.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="人生无限公司">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C语言程序设计·二</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-28T16:48:25+08:00">
+                2018-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="二维数组"><a href="#二维数组" class="headerlink" title="二维数组"></a>二维数组</h2><p><code>T a[n][m]</code></p>
+<ul>
+<li>MxN个元素是在内存里一个挨着一个存放的</li>
+<li>数组占用了一片连续的，大小为MxNxsizeof(T)字节的存储空间</li>
+<li>每一行有M个元素</li>
+<li>如果a[0][0]地址为n，那么a[i][j]地址为n+ixm+j</li>
+<li>二维数组每一行，实际上是一个一维数组，a[0],a[1]可以看作是一维数组的名字，可以直接使用</li>
+</ul>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><ul>
+<li>调用函数的语句之前用函数声明即可，不用定义</li>
+<li>形参是实参的拷贝，形参的改变不会影响实参(数组，指针，对象除外)</li>
+<li>数组名做参数<code>(int a[])</code>，不用写个数</li>
+<li>数组的长度可以是<code>sizeof(a)/sizeof(int)</code></li>
+<li>二维数组做参数必须要写多少列，不用写明多少行，这样才能根据下标算出地址<br><code>(int a[][5])</code></li>
+</ul>
+<h2 id="库函数"><a href="#库函数" class="headerlink" title="库函数"></a>库函数</h2><h3 id="cmath"><a href="#cmath" class="headerlink" title="cmath"></a>cmath</h3><ul>
+<li>int abs(int x) 绝对值</li>
+<li>double sqrt(double x) 平方根</li>
+</ul>
+<h3 id="ctype"><a href="#ctype" class="headerlink" title="ctype"></a>ctype</h3><ul>
+<li>int isdigit(int c) 判断c是不是数字字符</li>
+<li>int isalpha(int c) 判断c是否是一个字母</li>
+</ul>
+<h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><p>一个函数自己调用自己，就是递归<br>就是假设这个函数已经写好了，能够拿到返回值了，在内部直接使用即可</p>
+<ul>
+<li><p>阶乘  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">  //返回n的阶乘</span><br><span class="line">int Factorial(int n)&#123;</span><br><span class="line"></span><br><span class="line">	//终止条件</span><br><span class="line">	if(n&lt;2)&#123;</span><br><span class="line">		return 1;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//递归 n的阶乘等于n*(n-1)的阶乘</span><br><span class="line">	return n*Factorial(n-1);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>求斐波那契数列第n项</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> //斐波那契数列第n项</span><br><span class="line">int Fib(int n)&#123;</span><br><span class="line">	if(n==0)</span><br><span class="line">		return 0;</span><br><span class="line">	if(n==1||n==2)&#123;</span><br><span class="line">		return 1;</span><br><span class="line">	&#125;</span><br><span class="line">	return Fib(n-1)+Fib(n-2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h2><p>与某个数的第几位相关的运算，都可以考虑位运算<br>写一个表达式使得该表达式的值和a的第n位相同<code>(a&gt;&gt;n-1)&amp;1</code></p>
+<ul>
+<li><code>&amp;</code><br>两个二进制位为1是才是1<br>21&amp;18=16<br>用来置0</li>
+<li><code>|</code><br>有一个是1就是1<br>21|18=23<br>用来置1</li>
+<li><code>&gt;&gt;右移</code><br>负数高位补1，正数高位补0<br>右移一位相当于除以2，并往小里取整<br>-25&gt;&gt;4=-2<br>-2&gt;&gt;4=-1<br>-15&gt;&gt;3=-2</li>
+<li><code>&lt;&lt;左移</code><br>高位丢弃，低位补0<br>左移1位就是乘以2，而且左移操作比乘法快得多</li>
+</ul>
+<ul>
+<li><p><code>^异或</code><br>两位不同时为1，相同为0<br>21^18=7<br>用来按位取反 1111 1111<br><code>如果a^b=c，那么c^b=a,c^a=b</code>此规律能用来进行简单的加密解密<br>异或能不用临时变量就交换两个变量的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int a = 5,b=7;</span><br><span class="line">a = a^b;//假设为c了现在</span><br><span class="line">b = a^b;</span><br><span class="line">a = a^b;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>~取反</code>  </p>
+</li>
+</ul>
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><ul>
+<li>括号括起来的字符串常量，如”China”</li>
+<li>放在字符数组char[]中，以’\0’（是一个字符，ASCII为0）结尾，元素个数应该为字符串长度+1</li>
+<li>让一个串中间=0，相当于\0了</li>
+<li>char数组中每个字符的值，可以随意改变(比JavaString好)</li>
+<li>string对象/C++</li>
+<li>字符串常量占据<strong>内存</strong>的字节数是字符长度+1，因为/0</li>
+<li>字符串长度不包括/0</li>
+<li>“”也是合法常量，内存空间会占一个字节</li>
+<li>双引号 \”   斜杠\</li>
+</ul>
+<h3 id="读入字符串"><a href="#读入字符串" class="headerlink" title="读入字符串"></a>读入字符串</h3><ul>
+<li>cin/scanf 读入对象会在末尾自动加\0</li>
+<li>scanf/cin读入到空格为止</li>
+<li>cin.getline 读一行</li>
+</ul>
+<h3 id="字符串库函数"><a href="#字符串库函数" class="headerlink" title="字符串库函数"></a>字符串库函数</h3><ul>
+<li>cstring</li>
+<li>形参是char[]，传入的参数可以是常量和char[]</li>
+<li>strcpy(dest,src) 给字符数组赋值</li>
+<li>字符数组不能直接用 “=” 赋值，字符指针可以，而且只有const指针才没有warning</li>
+<li>strcmp(s1,s2) 字典序</li>
+<li>strlen</li>
+<li>strcat</li>
+<li>strupr</li>
+<li>strlwr</li>
+<li>strstr 找子串</li>
+<li>strtok 找出被指定字符分割的串 要连续调用 坑很多  </li>
+<li><p>strtok在切割字符串的时间，实际上就是将分割符的字符delimiter替换为’\0’并且返回首地址。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//定义一个指针来指向待分解串</span><br><span class="line">    char*b_temp;</span><br><span class="line">    /*</span><br><span class="line">    * 1、判断参数str_arr是否为空，如果是NULL就以传递进来的temp_str作为起始位置；</span><br><span class="line">    * 若不是NULL，则以str为起始位置开始切分。</span><br><span class="line">    */</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>atoi 字符转数字</p>
+</li>
+<li>itoa 数字转字符</li>
+</ul>
+<h2 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ul>
+<li>每个变量都存在从某个内存地址开始的若干个字节中</li>
+<li>指针，也称指针变量，大小为4/8个字节，其内容是一个内存地址</li>
+<li>通过指针，能够对指针指向的内存区域进行读写</li>
+</ul>
+<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><ul>
+<li>int* p</li>
+<li>char* pc</li>
+<li>float* pf</li>
+</ul>
+<h3 id="指针的内容"><a href="#指针的内容" class="headerlink" title="指针的内容"></a>指针的内容</h3><ul>
+<li>int<em> p = (int</em> )4000; p的值是4000</li>
+<li>通过p可以修改地址4000里面的内容</li>
+<li>星p就是地址4000里面的内容，可以直接赋值</li>
+</ul>
+<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ul>
+<li>指针存的是地址</li>
+<li>char ch1 = ‘a’;</li>
+<li>char* pc = &amp; ch1;</li>
+<li><ul>
+<li>pc = ‘b’</li>
+</ul>
+</li>
+<li>不同类型的指针，要通过强制类型转换才能赋值  </li>
+</ul>
+<h3 id="指针的运算"><a href="#指针的运算" class="headerlink" title="指针的运算"></a>指针的运算</h3><ul>
+<li>同类型指针可以比较大小</li>
+<li>同类型指针，可以相减</li>
+<li><strong>p1-p2=(p1地址-p2地址)/sizeof(T)</strong></li>
+<li><strong> p+n=地址p+ nxsizeof(T) </strong></li>
+<li>指针可以用[]来运算，<strong>p[n] = *(p+n)</strong></li>
+<li>地址0不能访问，指向地址0是空指针</li>
+<li>NULL就是0</li>
+</ul>
+<h3 id="指针作为函数参数"><a href="#指针作为函数参数" class="headerlink" title="指针作为函数参数"></a>指针作为函数参数</h3><ul>
+<li>指针做形参可以修改他们的指向的地址的内容，如Swap</li>
+</ul>
+<h3 id="数组和指针"><a href="#数组和指针" class="headerlink" title="数组和指针"></a>数组和指针</h3><ul>
+<li>数组的名字就是一个指针常量，指向数组开始地址</li>
+<li>memset() 将n个字符设为统一值</li>
+</ul>
+<h3 id="指针和二维数组"><a href="#指针和二维数组" class="headerlink" title="指针和二维数组"></a>指针和二维数组</h3><ul>
+<li>T a[M][N]</li>
+<li>a[i]是一个一维数组，且sizeof(a[i]) = sizeof(T) * N</li>
+<li>a[i]类型是T*</li>
+<li>a的类型是T( * )[]指向数组的指针  </li>
+</ul>
+<h3 id="指向指针的指针"><a href="#指向指针的指针" class="headerlink" title="指向指针的指针"></a>指向指针的指针</h3><ul>
+<li>T** P</li>
+<li><ul>
+<li>p 的类型是 T*</li>
+</ul>
+</li>
+</ul>
+<h3 id="指针和字符串常量"><a href="#指针和字符串常量" class="headerlink" title="指针和字符串常量"></a>指针和字符串常量</h3><ul>
+<li>字符串常量和字符数组，都是char*</li>
+<li>可以直接cout char*  </li>
+</ul>
+<h3 id="void指针"><a href="#void指针" class="headerlink" title="void指针"></a>void指针</h3><ul>
+<li><p>可以用任何类型的指针对void指针进行初始化或赋值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">double d = 1.52;</span><br><span class="line">void* p = &amp;d;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>sizeof(void) 无定义，所以*p，p++什么的都无定义</p>
+</li>
+</ul>
+<h3 id="内存操作库函数"><a href="#内存操作库函数" class="headerlink" title="内存操作库函数"></a>内存操作库函数</h3><p>mem = memory<br>参数都是void* 方便得一pi<br>其实都是一个个逐字赋值的</p>
+<ul>
+<li>memset</li>
+<li>memcpy</li>
+</ul>
+<h3 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h3><ul>
+<li>函数也会占用一段连续的内存空间</li>
+<li>内存区域开始地址，就是函数名，函数名就是一个指针</li>
+<li>将函数的入口地址赋给指针，就能通过指针调用这个函数</li>
+<li>int (* pf)(int,char)</li>
+<li>返回值 （* 指针变量名）（参数类型）</li>
+<li>作用 当函数作为参数的时候，可以使用指针 比如qsort</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C-C/" rel="tag"># C/C++</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/25/循环/" rel="next" title="循环">
+                <i class="fa fa-chevron-left"></i> 循环
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/09/Maven/" rel="prev" title="Maven">
+                Maven <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/touxiang.jpeg"
+                alt="鼓楼区小码农" />
+            
+              <p class="site-author-name" itemprop="name">鼓楼区小码农</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#二维数组"><span class="nav-number">1.</span> <span class="nav-text">二维数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数"><span class="nav-number">2.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#库函数"><span class="nav-number">3.</span> <span class="nav-text">库函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cmath"><span class="nav-number">3.1.</span> <span class="nav-text">cmath</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ctype"><span class="nav-number">3.2.</span> <span class="nav-text">ctype</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#递归"><span class="nav-number">4.</span> <span class="nav-text">递归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#位运算"><span class="nav-number">5.</span> <span class="nav-text">位运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串"><span class="nav-number">6.</span> <span class="nav-text">字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#读入字符串"><span class="nav-number">6.1.</span> <span class="nav-text">读入字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串库函数"><span class="nav-number">6.2.</span> <span class="nav-text">字符串库函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指针"><span class="nav-number">7.</span> <span class="nav-text">指针</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念"><span class="nav-number">7.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">7.2.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指针的内容"><span class="nav-number">7.3.</span> <span class="nav-text">指针的内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用法"><span class="nav-number">7.4.</span> <span class="nav-text">用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指针的运算"><span class="nav-number">7.5.</span> <span class="nav-text">指针的运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指针作为函数参数"><span class="nav-number">7.6.</span> <span class="nav-text">指针作为函数参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组和指针"><span class="nav-number">7.7.</span> <span class="nav-text">数组和指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指针和二维数组"><span class="nav-number">7.8.</span> <span class="nav-text">指针和二维数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指向指针的指针"><span class="nav-number">7.9.</span> <span class="nav-text">指向指针的指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指针和字符串常量"><span class="nav-number">7.10.</span> <span class="nav-text">指针和字符串常量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#void指针"><span class="nav-number">7.11.</span> <span class="nav-text">void指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存操作库函数"><span class="nav-number">7.12.</span> <span class="nav-text">内存操作库函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数指针"><span class="nav-number">7.13.</span> <span class="nav-text">函数指针</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">鼓楼区小码农</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
