@@ -78,18 +78,18 @@
 
 
 
-<meta name="description" content="Maven作用构建Java项目 生成maven骨架的项目目录 通过mvn test进行测试 通过mvn package等对项目进行打包，打包成jar/war等 通过mvn提供的插件进行扩展，比如在命令行跑SpringBoot项目，可以使用mvn提供的插件使用mvn SpringBoot:run命令  管理依赖 通过配置文件，增减依赖，而不用从网上下载拖进项目 依赖可以继承，不用写很冗余的xml">
+<meta name="description" content="Maven作用构建Java项目 生成maven骨架的项目目录 通过mvn test进行测试 通过mvn package等对项目进行打包，打包成jar/war等 通过mvn提供的插件进行扩展，比如在命令行跑SpringBoot项目，可以使用mvn提供的插件使用mvn SpringBoot:run命令  管理依赖 通过配置文件，增减依赖，而不用从网上下载拖进项目 依赖可以继承，不用写很冗余的xml 向">
 <meta name="keywords" content="Maven">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Maven">
 <meta property="og:url" content="http://yoursite.com/2018/04/09/Maven/index.html">
 <meta property="og:site_name" content="人生无限公司">
-<meta property="og:description" content="Maven作用构建Java项目 生成maven骨架的项目目录 通过mvn test进行测试 通过mvn package等对项目进行打包，打包成jar/war等 通过mvn提供的插件进行扩展，比如在命令行跑SpringBoot项目，可以使用mvn提供的插件使用mvn SpringBoot:run命令  管理依赖 通过配置文件，增减依赖，而不用从网上下载拖进项目 依赖可以继承，不用写很冗余的xml">
+<meta property="og:description" content="Maven作用构建Java项目 生成maven骨架的项目目录 通过mvn test进行测试 通过mvn package等对项目进行打包，打包成jar/war等 通过mvn提供的插件进行扩展，比如在命令行跑SpringBoot项目，可以使用mvn提供的插件使用mvn SpringBoot:run命令  管理依赖 通过配置文件，增减依赖，而不用从网上下载拖进项目 依赖可以继承，不用写很冗余的xml 向">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-09T06:26:54.312Z">
+<meta property="og:updated_time" content="2018-04-09T06:29:06.794Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Maven">
-<meta name="twitter:description" content="Maven作用构建Java项目 生成maven骨架的项目目录 通过mvn test进行测试 通过mvn package等对项目进行打包，打包成jar/war等 通过mvn提供的插件进行扩展，比如在命令行跑SpringBoot项目，可以使用mvn提供的插件使用mvn SpringBoot:run命令  管理依赖 通过配置文件，增减依赖，而不用从网上下载拖进项目 依赖可以继承，不用写很冗余的xml">
+<meta name="twitter:description" content="Maven作用构建Java项目 生成maven骨架的项目目录 通过mvn test进行测试 通过mvn package等对项目进行打包，打包成jar/war等 通过mvn提供的插件进行扩展，比如在命令行跑SpringBoot项目，可以使用mvn提供的插件使用mvn SpringBoot:run命令  管理依赖 通过配置文件，增减依赖，而不用从网上下载拖进项目 依赖可以继承，不用写很冗余的xml 向">
 
 
 
@@ -370,6 +370,7 @@
 <h3 id="管理依赖"><a href="#管理依赖" class="headerlink" title="管理依赖"></a>管理依赖</h3><ul>
 <li>通过配置文件，增减依赖，而不用从网上下载拖进项目</li>
 <li>依赖可以继承，不用写很冗余的xml</li>
+<li>向这种能够用语句配置依赖的，都是根据配置从某个源下载的，所以记得改源！不然下载很慢</li>
 </ul>
 <h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><p>Maven项目的目录结构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">1、根目录下就只有src和pom.xml文件</span><br><span class="line">2、main下是源码，test下是单元测试代码</span><br><span class="line"></span><br><span class="line">- src</span><br><span class="line">  - main</span><br><span class="line">    - java</span><br><span class="line">      - com.example(项目包名)</span><br><span class="line">        - controller</span><br><span class="line">        ....</span><br><span class="line"></span><br><span class="line">  - test</span><br><span class="line">    - java</span><br><span class="line">      - com.example(项目包名)</span><br><span class="line"></span><br><span class="line">- pom.xml</span><br></pre></td></tr></table></figure></p>
 <h2 id="构建项目"><a href="#构建项目" class="headerlink" title="构建项目"></a>构建项目</h2><ul>
@@ -543,7 +544,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
