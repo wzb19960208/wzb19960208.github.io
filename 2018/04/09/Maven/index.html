@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="人生无限公司">
 <meta property="og:description" content="Maven作用构建Java项目 生成maven骨架的项目目录 通过mvn test进行测试 通过mvn package等对项目进行打包，打包成jar/war等 通过mvn提供的插件进行扩展，比如在命令行跑SpringBoot项目，可以使用mvn提供的插件使用mvn SpringBoot:run命令  管理依赖 通过配置文件，增减依赖，而不用从网上下载拖进项目 依赖可以继承，不用写很冗余的xml 向">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-09T06:29:06.794Z">
+<meta property="og:updated_time" content="2018-04-25T07:16:01.101Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Maven">
 <meta name="twitter:description" content="Maven作用构建Java项目 生成maven骨架的项目目录 通过mvn test进行测试 通过mvn package等对项目进行打包，打包成jar/war等 通过mvn提供的插件进行扩展，比如在命令行跑SpringBoot项目，可以使用mvn提供的插件使用mvn SpringBoot:run命令  管理依赖 通过配置文件，增减依赖，而不用从网上下载拖进项目 依赖可以继承，不用写很冗余的xml 向">
@@ -407,6 +407,7 @@
 <h2 id="依赖继承"><a href="#依赖继承" class="headerlink" title="依赖继承"></a>依赖继承</h2><ul>
 <li>假如B依赖A，C再依赖B，那么C就会同时依赖A和B了</li>
 <li>在一个依赖下面使用<exclusion>可以指定屏蔽掉他的某个依赖，使自己的项目不继承该依赖。</exclusion></li>
+<li>假如你的Project A的某个依赖D添加了<optional>true</optional>，当别人通过pom依赖Project A的时候，D不会被传递依赖进来</li>
 </ul>
 <h2 id="依赖冲突"><a href="#依赖冲突" class="headerlink" title="依赖冲突"></a>依赖冲突</h2><ul>
 <li>假设继承的依赖里面，有相同的依赖，但是它们的版本号不同，这就会引起冲突</li>
@@ -453,6 +454,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/09/时间复杂度分析/" rel="prev" title="时间复杂度分析">
+                时间复杂度分析 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -533,7 +538,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -544,7 +549,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -555,7 +560,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

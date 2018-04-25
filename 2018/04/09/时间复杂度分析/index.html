@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/icon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="算法," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言一些感想 合理的思考路径是首要的，而不是仅仅给出一个正确的答案。 学习不能追求一步到位，不要急躁 时间不是无限的。学习，切忌完美主义 重视基础的数据结构和算法，一定要很熟练 学习和做题要掌握平衡，学会总结 做算法题挺爽的，业务代码/工程能力又是另一回事了  算法题要注意的一些地方数据特征 近乎有序/插入排序 范围非常有限/计数排序 链表结构/归并排序 内存很小，放不下/外排序  题目条件 数组">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="时间复杂度分析">
+<meta property="og:url" content="http://yoursite.com/2018/04/09/时间复杂度分析/index.html">
+<meta property="og:site_name" content="人生无限公司">
+<meta property="og:description" content="前言一些感想 合理的思考路径是首要的，而不是仅仅给出一个正确的答案。 学习不能追求一步到位，不要急躁 时间不是无限的。学习，切忌完美主义 重视基础的数据结构和算法，一定要很熟练 学习和做题要掌握平衡，学会总结 做算法题挺爽的，业务代码/工程能力又是另一回事了  算法题要注意的一些地方数据特征 近乎有序/插入排序 范围非常有限/计数排序 链表结构/归并排序 内存很小，放不下/外排序  题目条件 数组">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-09T09:08:23.328Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="时间复杂度分析">
+<meta name="twitter:description" content="前言一些感想 合理的思考路径是首要的，而不是仅仅给出一个正确的答案。 学习不能追求一步到位，不要急躁 时间不是无限的。学习，切忌完美主义 重视基础的数据结构和算法，一定要很熟练 学习和做题要掌握平衡，学会总结 做算法题挺爽的，业务代码/工程能力又是另一回事了  算法题要注意的一些地方数据特征 近乎有序/插入排序 范围非常有限/计数排序 链表结构/归并排序 内存很小，放不下/外排序  题目条件 数组">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/09/时间复杂度分析/"/>
+
+
+
+
+
+  <title>时间复杂度分析 | 人生无限公司</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">人生无限公司</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">五流游戏玩家/四流动漫迷/三流吃货/二流程序员/一点五流书法爱好者</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            文章
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            书法
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            简历
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/09/时间复杂度分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鼓楼区小码农">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/touxiang.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="人生无限公司">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">时间复杂度分析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-09T14:41:38+08:00">
+                2018-04-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><h2 id="一些感想"><a href="#一些感想" class="headerlink" title="一些感想"></a>一些感想</h2><ul>
+<li>合理的思考路径是首要的，而不是仅仅给出一个正确的答案。</li>
+<li>学习不能追求一步到位，不要急躁</li>
+<li>时间不是无限的。学习，切忌<strong>完美主义</strong></li>
+<li>重视基础的数据结构和算法，一定要很熟练</li>
+<li>学习和做题要掌握平衡，学会总结</li>
+<li>做算法题挺爽的，业务代码/工程能力又是另一回事了</li>
+</ul>
+<h2 id="算法题要注意的一些地方"><a href="#算法题要注意的一些地方" class="headerlink" title="算法题要注意的一些地方"></a>算法题要注意的一些地方</h2><h3 id="数据特征"><a href="#数据特征" class="headerlink" title="数据特征"></a>数据特征</h3><ul>
+<li>近乎有序/插入排序</li>
+<li>范围非常有限/计数排序</li>
+<li>链表结构/归并排序</li>
+<li>内存很小，放不下/外排序</li>
+</ul>
+<h3 id="题目条件"><a href="#题目条件" class="headerlink" title="题目条件"></a>题目条件</h3><ul>
+<li>数组有序</li>
+<li>nlogn，考虑分治</li>
+<li>数据规模</li>
+<li>空间规模</li>
+</ul>
+<h3 id="没思路"><a href="#没思路" class="headerlink" title="没思路"></a>没思路</h3><ul>
+<li>自己写几个测试用例，过一下，找规律，尤其是一些数学题</li>
+<li>暴力法，可行比想不出好</li>
+<li>优化 空间换时间Hash表</li>
+</ul>
+<h3 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h3><ul>
+<li>空数组[]，空字符串””</li>
+<li>NULL</li>
+<li>0</li>
+</ul>
+<h1 id="时间复杂度分析"><a href="#时间复杂度分析" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
+<li>O(n)其实可以看成需要完成的指令数与n的关系</li>
+<li><p>常数是忽略的，所以一般随着n增大到一定程度，才会看见差距</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">10000*n 也是线性级别</span><br><span class="line">2*n^2 平方级别</span><br><span class="line">n很小的时候，可能平方级别的更优，但是随着n增大，差距就出来了</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>只关心主导的复杂度</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O(nlogn+n)-----&gt;O(nlogn)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>但是如果两个问题规模前后无联系，那么他们都要考虑</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">O(AlogA+B) A\B都是问题规模，但是AB没有任何联系</span><br><span class="line"></span><br><span class="line">思考题</span><br><span class="line">一个长度为N的字符串数组，里面每个字符串的长度是S，</span><br><span class="line">假设先对里面各个字符串里的字符排序，再按照字典序将数组里的字符串排序，</span><br><span class="line">整个操作的时间复杂度？</span><br><span class="line"></span><br><span class="line">首先对每个字符串排序 用快排 SlogS N个字符串就NSlogS</span><br><span class="line">再对整个字符数组使用快排，因为规模是N，就是进行logN次，每次比较的时间，</span><br><span class="line">就是比较每个字符串大小的时间，应该是1个个char进行比较的，就是S</span><br><span class="line">所以整个比较的时间是NS，结果就是NSlogN</span><br><span class="line">综合起来就是NSlogS+NSlogN</span><br><span class="line"></span><br><span class="line">快排与我们提供的compare函数有关，当这个函数是O(1)，就是nlogn，</span><br><span class="line">如果是别的，那就nlogn*O</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="数据规模"><a href="#数据规模" class="headerlink" title="数据规模"></a>数据规模</h2><p>这是C语言！<br>通过O(N)的执行时间，其实可以推断出其它复杂度的时间  </p>
+<ul>
+<li>n=10^7 0.04s</li>
+<li>10^8 0.4s</li>
+<li>10^9 4s<br>所以如果是O(n^2),当n=10^4时，就是0.4s了  </li>
+</ul>
+<h2 id="通用的判断时间复杂度的方法"><a href="#通用的判断时间复杂度的方法" class="headerlink" title="通用的判断时间复杂度的方法"></a>通用的判断时间复杂度的方法</h2><ul>
+<li>构造相应的程序</li>
+<li>每次使n的值扩大2倍</li>
+<li>两次的执行时间相除，看倍数</li>
+<li>这个方法还会抵消常数项，非常好</li>
+<li>如果是线性的，那肯定是2倍/平方的就会是4倍/如果对数的话就是log2n/logn</li>
+</ul>
+<h2 id="时间复杂度举例"><a href="#时间复杂度举例" class="headerlink" title="时间复杂度举例"></a>时间复杂度举例</h2><h3 id="O-n"><a href="#O-n" class="headerlink" title="O(n)"></a>O(n)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Reverse 反转数组</span><br><span class="line">for(int i=0;i&lt;n/2;i++)</span><br><span class="line"> Swap(i,len-i-1)</span><br><span class="line"></span><br><span class="line">具体是1/2n</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for(int i=0;i&lt;n;i++)</span><br><span class="line">  for(int j=1;j&lt;30;j++)</span><br><span class="line"></span><br><span class="line">第二层的执行次数是固定的，与n无关</span><br><span class="line">30*n</span><br></pre></td></tr></table></figure>
+<h3 id="O-N-2"><a href="#O-N-2" class="headerlink" title="O(N^2)"></a>O(N^2)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for(int i=0;i&lt;n;i++)</span><br><span class="line">  for(int j=i+1;j&lt;n;j++)</span><br><span class="line"></span><br><span class="line">两层循环，虽然第二层少一点，但是两层都与n的规模有关</span><br><span class="line">(n-1)+(n-2)+(n-3)+.......1----&gt;O(n^2)</span><br></pre></td></tr></table></figure>
+<h3 id="O-logn"><a href="#O-logn" class="headerlink" title="O(logn)"></a>O(logn)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">二分查找</span><br><span class="line">其实实质上就是</span><br><span class="line">第一次在n个里面找一次</span><br><span class="line">第二次在n/2里面找一次</span><br><span class="line">在n/4里面找一次</span><br><span class="line">。。。</span><br><span class="line">在1个里面</span><br><span class="line">就是看n经过几次除以2等于1，就是求n是2的多少次方</span><br><span class="line">所以是logn</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">intToString</span><br><span class="line"></span><br><span class="line">while(nums)&#123;</span><br><span class="line">  s+=&apos;0&apos;+nums%10;</span><br><span class="line">  nums/=10;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">这个循环的执行次数，就是看nums除多少次10会为0</span><br><span class="line"></span><br><span class="line">就是lgnums</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for(int sz=1;sz&lt;n;sz+=sz)</span><br><span class="line"></span><br><span class="line">sz的递增顺序是1，2，4.。。。。。n，就是看乘多少次2会为n</span><br><span class="line">logn</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">换底公式</span><br><span class="line">logab = logaN/logbN</span><br><span class="line">所以底数不重要</span><br></pre></td></tr></table></figure>
+<h3 id="O-根号n"><a href="#O-根号n" class="headerlink" title="O(根号n)"></a>O(根号n)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">所以说只要看指令执行的次数就好了</span><br><span class="line">for(int x=2;x*x&lt;=n;x++)</span><br><span class="line">2,3,4......根号n，就完了</span><br></pre></td></tr></table></figure>
+<h3 id="对于递归的方法"><a href="#对于递归的方法" class="headerlink" title="对于递归的方法"></a>对于递归的方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">递归的二分查找</span><br><span class="line">深度是logn</span><br><span class="line">每次递归只进行一次调用</span><br><span class="line">所以是logn</span><br><span class="line"></span><br><span class="line">对于深度是deth，每个递归函数时间是T的</span><br><span class="line">总复杂度是T*deth</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">两次递归的</span><br><span class="line">比如斐波那契数列</span><br><span class="line"></span><br><span class="line">return f(n-1)+f(n-2)</span><br><span class="line"></span><br><span class="line">把tree画出来，然后看结点数就好了，每个结点要执行一次指令</span><br><span class="line"></span><br><span class="line">因为画出来不是一个满的二叉树</span><br><span class="line">从最左边的数入手，可以看出层数</span><br><span class="line">从最右边的树入手，可以看出满结点的层数 n/2 因为是每次-2</span><br><span class="line">比如n=8</span><br><span class="line"></span><br><span class="line">         6</span><br><span class="line">       5  4</span><br><span class="line">     4      2</span><br><span class="line">   3          0</span><br><span class="line"> 2              </span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">所以2^0+2^1+.....2^n/2次</span><br><span class="line">因为左边还有一坨 所以总的复杂度肯定&gt;O(2^n/2)</span><br><span class="line">不深究了</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">归并排序</span><br><span class="line">虽然也是两次递归，但是不一样</span><br><span class="line">画图就懂了</span><br></pre></td></tr></table></figure>
+<h2 id="均摊时间复杂度"><a href="#均摊时间复杂度" class="headerlink" title="均摊时间复杂度"></a>均摊时间复杂度</h2><ul>
+<li>动态数组的自动扩容</li>
+</ul>
+<h3 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h3><ul>
+<li>普通插入O(1)</li>
+<li>如果满了，自动扩容到2倍大小</li>
+<li>扩容就是每次新建一个2倍size的数组，然后一个个复制上去，O(N)</li>
+<li>均摊之后其实插入操作是O(1)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">前n次插入，总花费时间是n</span><br><span class="line">第n+1次插入，导致扩容，花费时间n</span><br><span class="line"></span><br><span class="line">插入次数 n+1，总花费时间n+n</span><br><span class="line">平均单次插入时间即2n/n+1  常数级别</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><ul>
+<li>等到内容为1/4时，再缩容为1/2</li>
+<li>如果内容为1/2时马上缩小。此时如果需要add，马上又扩容。如果此时又delete，马上又缩小。那么这时插入删除都是O(N)了，极端情况</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/09/Maven/" rel="next" title="Maven">
+                <i class="fa fa-chevron-left"></i> Maven
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/23/SpringBoot日常使用/" rel="prev" title="SpringBoot日常使用">
+                SpringBoot日常使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://markdown-image-1252736437.cos.ap-guangzhou.myqcloud.com/touxiang.jpeg"
+                alt="鼓楼区小码农" />
+            
+              <p class="site-author-name" itemprop="name">鼓楼区小码农</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一些感想"><span class="nav-number">1.1.</span> <span class="nav-text">一些感想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法题要注意的一些地方"><span class="nav-number">1.2.</span> <span class="nav-text">算法题要注意的一些地方</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据特征"><span class="nav-number">1.2.1.</span> <span class="nav-text">数据特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题目条件"><span class="nav-number">1.2.2.</span> <span class="nav-text">题目条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#没思路"><span class="nav-number">1.2.3.</span> <span class="nav-text">没思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#坑"><span class="nav-number">1.2.4.</span> <span class="nav-text">坑</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#时间复杂度分析"><span class="nav-number">2.</span> <span class="nav-text">时间复杂度分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">2.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据规模"><span class="nav-number">2.2.</span> <span class="nav-text">数据规模</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通用的判断时间复杂度的方法"><span class="nav-number">2.3.</span> <span class="nav-text">通用的判断时间复杂度的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间复杂度举例"><span class="nav-number">2.4.</span> <span class="nav-text">时间复杂度举例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#O-n"><span class="nav-number">2.4.1.</span> <span class="nav-text">O(n)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#O-N-2"><span class="nav-number">2.4.2.</span> <span class="nav-text">O(N^2)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#O-logn"><span class="nav-number">2.4.3.</span> <span class="nav-text">O(logn)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#O-根号n"><span class="nav-number">2.4.4.</span> <span class="nav-text">O(根号n)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对于递归的方法"><span class="nav-number">2.4.5.</span> <span class="nav-text">对于递归的方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#均摊时间复杂度"><span class="nav-number">2.5.</span> <span class="nav-text">均摊时间复杂度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#插入"><span class="nav-number">2.5.1.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除"><span class="nav-number">2.5.2.</span> <span class="nav-text">删除</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">鼓楼区小码农</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
